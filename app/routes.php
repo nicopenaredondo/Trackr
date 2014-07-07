@@ -15,3 +15,9 @@ Route::get('/', function()
 {
 	return View::make('hello');
 });
+
+
+Route::get('dashboard', function()
+{
+	return View::make('app.dashboard.index');
+});
