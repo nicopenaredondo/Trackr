@@ -15,4 +15,9 @@ class BaseController extends Controller {
 		}
 	}
 
+	public function getDashboard()
+	{
+		return View::make('backend.dashboard.index');
+	}
+
 }
