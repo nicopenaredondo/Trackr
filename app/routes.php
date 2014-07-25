@@ -45,3 +45,5 @@ Route::post('forgot-password',[
 Route::resource('users','UsersController');
 Route::resource('projects','ProjectsController');
 Route::resource('announcements','AnnouncementsController');
+Route::resource('departments','DepartmentsController');
+Route::resource('jobs','JobsController');

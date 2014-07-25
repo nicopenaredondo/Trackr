@@ -27,7 +27,7 @@ abstract class Validator
 
   }
 
-  public function isValidForUpdate($input)
+  public function isValidForUpdate($input, $additionalRules = NULL)
   {
 
     $validator = V::make($input, static::$updateRules);

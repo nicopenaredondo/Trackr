@@ -1,6 +1,13 @@
 <?php namespace Trackr\Repository;
 
+use User, UserProfile;
+use Department;
+use Job;
+use Trackr\Repository\Users\EloquentUsersRepository;
+use Trackr\Repository\Departments\EloquentDepartmentsRepository;
+use Trackr\Repository\Jobs\EloquentJobsRepository;
 use Illuminate\Support\ServiceProvider;
+
 
 class RepositoryServiceProvider extends ServiceProvider
 {
@@ -15,12 +22,26 @@ class RepositoryServiceProvider extends ServiceProvider
 	{
 		$app = $this->app;
 
-		//Group Repository
-		/*$app->bind(
-			'IPostMo\Repository\Groups\InterfaceGroupRepository',
-			function(){
-				return new EloquentGroupRepository(new Group);
-			});*/
+		//Users Repository
+		$app->bind(
+			'Trackr\Repository\Users\InterfaceUsersRepository',
+		function(){
+				return new EloquentUsersRepository(new User, new UserProfile);
+		});
+
+		//Departments Repository
+		$app->bind(
+			'Trackr\Repository\Departments\InterfaceDepartmentsRepository',
+		function(){
+				return new EloquentDepartmentsRepository(new Department);
+		});
+
+		//Jobs Repository
+		$app->bind(
+			'Trackr\Repository\Jobs\InterfaceJobsRepository',
+		function(){
+				return new EloquentJobsRepository(new Job);
+		});
 
 	}
 }

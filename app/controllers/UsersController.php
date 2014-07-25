@@ -1,6 +1,41 @@
 <?php
 
-class UsersController extends BaseController {
+//repository
+use Trackr\Repository\Users\InterfaceUsersRepository as UserRepository;
+use Trackr\Repository\Departments\InterfaceDepartmentsRepository as DepartmentRepository;
+//services
+use Trackr\Services\Validation\UsersValidator as UserValidator;
+
+class UsersController extends BaseController
+{
+
+	/**
+	 * User Repository
+	 *
+	 * @param  \Trackr\Repository\Users\InterfaceUsersRepository
+	 */
+	protected $user;
+
+	/**
+	 * Department Repository
+	 *
+	 * @param  \Trackr\Repository\Departments\InterfaceDepartmentsRepository
+	 */
+	protected $department;
+
+	/**
+	 * User Validation Services
+	 *
+	 * @param  \Trackr\Services\Validation\UsersValidator
+	 */
+	protected $validator;
+
+	public function __construct(UserRepository $user, DepartmentRepository $department, UserValidator $validator)
+	{
+		$this->user 			= $user;
+		$this->department = $department;
+		$this->validator 	= $validator;
+	}
 
 	/**
 	 * Display a listing of the resource.
@@ -11,7 +46,9 @@ class UsersController extends BaseController {
 	public function index()
 	{
 		//
-		return View::make('backend.users.index');
+		$listOfUsers = $this->user->make(['userProfile'])->paginate(12);
+		return View::make('backend.users.index')
+							->with('listOfUsers', $listOfUsers);
 	}
 
 	/**
@@ -23,7 +60,10 @@ class UsersController extends BaseController {
 	public function create()
 	{
 		//
-		return View::make('backend.users.create');
+		$listOfDepartments = $this->department->make(['jobs'])->get();
+		//dd($listOfDepartments->toArray());
+		return View::make('backend.users.create')
+							->with('listOfDepartments', $listOfDepartments);
 	}
 
 	/**
@@ -35,7 +75,22 @@ class UsersController extends BaseController {
 	public function store()
 	{
 		//
-		dd(Input::all());
+		if($this->validator->isValidForCreation(Input::all())){
+			DB::beginTransaction();
+			if($this->user->create(Input::all())){
+				DB::commit();
+				Session::flash('success', 'You have successfully created a new user');
+				return Redirect::route('users.index');
+			}else{
+				DB::rollBack();
+				Session::flash('error', 'Failed to create a new user. Please try again later');
+				return Redirect::route('users.index');
+			}
+		}else{
+			return Redirect::route('users.create')
+			              ->withErrors($this->validator->errors())
+			              ->withInput();
+		}
 	}
 
 	/**

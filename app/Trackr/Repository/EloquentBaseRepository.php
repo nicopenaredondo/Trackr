@@ -1,4 +1,4 @@
-<?php namespace IPostMo\Repository;
+<?php namespace Trackr\Repository;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -66,7 +66,22 @@ abstract class EloquentBaseRepository
 	{
 		$model = $this->model->create($data);
 
-		return ($model) ? true : false;
+		return $model;
+	}
+
+	/**
+	 * Update a resource of this model
+	 *
+	 * @param   integer   $id
+	 * @param 	array 		$data
+	 * @return 	collection
+	 */
+
+	public function update($id, $data)
+	{
+		$model = $this->model->find($id);
+
+		return $model->update($data);
 	}
 
 	/**

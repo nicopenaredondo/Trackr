@@ -1,4 +1,4 @@
-<?php namespace IPostMo\Extension\Validation;
+<?php namespace Trackr\Extension\Validation;
 
 use Illuminate\Validation\Validator;
 

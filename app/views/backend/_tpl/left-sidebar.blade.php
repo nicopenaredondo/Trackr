@@ -13,13 +13,8 @@
 				Attendances
 			</a>
 		</li>
-		<li>
-			<a href="#fakelink">
-				<i class="fa fa-building icon-sidebar"></i>
-				<i class="fa chevron-icon-sidebar"></i>
-				Departments
-			</a>
-		</li>
+		{{ HTML::activeLink(URL::route('departments.index'), 'Departments', 'departments' , 'fa-building icon-sidebar') }}
+		{{ HTML::activeLink(URL::route('jobs.index'), 'Jobs', 'jobs' , 'fa-user icon-sidebar') }}
 		<li>
 			<a href="#fakelink">
 				<i class="fa fa-cogs icon-sidebar"></i>
