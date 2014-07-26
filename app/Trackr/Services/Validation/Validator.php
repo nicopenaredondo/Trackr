@@ -30,7 +30,14 @@ abstract class Validator
   public function isValidForUpdate($input, $additionalRules = NULL)
   {
 
-    $validator = V::make($input, static::$updateRules);
+    if (isset($additionalRules)) {
+      # code...
+      $updateRules = array_merge($addedRules, static::$updateRules);
+    }else{
+      # code...
+      $updateRules = static::$updateRules;
+    }
+    $validator = V::make($input, $updateRules);
     return $this->check($validator);
 
   }
