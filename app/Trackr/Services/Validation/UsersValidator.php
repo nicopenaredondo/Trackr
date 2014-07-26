@@ -9,8 +9,6 @@ class UsersValidator extends Validator
 	];
 
 	static $updateRules = [
-		'username' => 'required|max:32',
-		'password' => 'required|max:64'
 	];
 
 }

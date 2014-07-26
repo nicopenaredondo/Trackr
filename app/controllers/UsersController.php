@@ -61,7 +61,6 @@ class UsersController extends BaseController
 	{
 		//
 		$listOfDepartments = $this->department->make(['jobs'])->get();
-		//dd($listOfDepartments->toArray());
 		return View::make('backend.users.create')
 							->with('listOfDepartments', $listOfDepartments);
 	}
@@ -103,7 +102,11 @@ class UsersController extends BaseController
 	public function show($id)
 	{
 		//
-		return View::make('backend.users.show');
+		$user = $this->user->find($id);
+		$userProfile = $user->userProfile;
+		return View::make('backend.users.show')
+							->with('user', $user)
+							->with('userProfile', $userProfile);
 	}
 
 	/**
@@ -116,6 +119,13 @@ class UsersController extends BaseController
 	public function edit($id)
 	{
 		//
+		$user = $this->user->find($id);
+		$userProfile = $user->userProfile;
+		$listOfDepartments = $this->department->make(['jobs'])->get();
+		return View::make('backend.users.edit')
+							->with('user', $user)
+							->with('userProfile', $userProfile)
+							->with('listOfDepartments', $listOfDepartments);
 	}
 
 	/**
@@ -128,6 +138,22 @@ class UsersController extends BaseController
 	public function update($id)
 	{
 		//
+		if($this->validator->isValidForUpdate(Input::all())){
+			DB::beginTransaction();
+			if($this->user->update($id, Input::all())){
+				DB::commit();
+				Session::flash('success', 'You have successfully updated this user');
+				return Redirect::route('users.show', $id);
+			}else{
+				DB::rollBack();
+				Session::flash('error', 'Failed to update this user. Please try again later');
+				return Redirect::route('users.show', $id);
+			}
+		}else{
+			return Redirect::route('users.edit', $id)
+			              ->withErrors($this->validator->errors())
+			              ->withInput();
+		}
 	}
 
 	/**
@@ -140,6 +166,14 @@ class UsersController extends BaseController
 	public function destroy($id)
 	{
 		//
+		$user = $this->user->find($id);
+		$userProfile = $user->userProfile;
+		if ($this->user->delete($user)) {
+			Session::flash('success', 'You have successfully deleted "<strong>'. $userProfile['first_name'] .' '.$userProfile['last_name'].'</strong>"');
+			return Redirect::route('users.index');
+		}
+			Session::flash('error', 'Failed to delete user "<strong>'. $userProfile['first_name'] .' '.$userProfile['last_name'].'</strong>"');
+			return Redirect::route('users.index');
 	}
 
 }

@@ -107,7 +107,7 @@ Add User Page
 					<div class="form-group has-feedback">
 						<label class="col-lg-3 control-label">Job Position</label>
 						<div class="col-lg-9">
-							<select class="form-control chosen-select" required="" data-bv-notempty-message="The job position is required and cannot be empty">
+							<select name="job_id" class="form-control chosen-select" required="" data-bv-notempty-message="The job position is required and cannot be empty">
 								@foreach($listOfDepartments as $department)
 									<optgroup label="{{ $department['department_name'] }} Department">
 										@foreach($department['jobs'] as $job)

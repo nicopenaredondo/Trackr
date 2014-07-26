@@ -4,18 +4,31 @@ Project Details Page
 @stop
 @section('content')
 	<!-- Begin page heading -->
-	<h1 class="page-heading">Project Details Page <small>Displays a form to add a new project</small></h1>
+	<h1 class="page-heading">Project Details Page <small>Displays the project details</small></h1>
 	<!-- End page heading -->
 
 	<!-- Begin breadcrumb -->
 	<ol class="breadcrumb default square rsaquo sm">
 		<li><a href="{{ URL::route('app.dashboard') }}"><i class="fa fa-home"></i></a></li>
 		<li><a href="{{ URL::route('projects.index') }}">List of Projects</a></li>
-		<li class="active">PROJECT NAME HERE</li>
+		<li class="active">{{ $project['project_name'] }}</li>
 	</ol>
 	<!-- End breadcrumb -->
-
+	@include('notification')
 	<div class="row">
+		<div class="col-md-12">
+			{{ Form::open(['route' => ['projects.destroy', $project['project_id']], 'method' => 'delete']) }}
+			<a href="{{ URL::route('projects.edit', $project['project_id']) }}" class="btn btn-info">
+				<i class="fa fa-pencil"></i>
+				Update Information
+			</a>
+			<button type="submit" class="btn btn-danger">
+		 		<i class="fa fa-trash-o"> Delete Project</i>
+			</button>
+		{{ Form::close() }}
+		</div>
+	</div>
+	<div class="row" style="margin-top:10px;">
 		<div class="col-md-8">
 			<div class="panel panel-primary panel-square panel-no-border">
 			  <div class="panel-heading">
@@ -108,31 +121,27 @@ Project Details Page
 				<table class="table table-striped">
 					<tr>
 						<td><strong>Contact Person</strong></td>
-						<td>Kate</td>
+						<td>{{ $project['project_contact_person'] }}</td>
 					</tr>
 					<tr>
 						<td><strong>Contact Number</strong></td>
-						<td>09245621232</td>
+						<td>{{ $project['project_contact_number'] }}</td>
 					</tr>
 					<tr>
 						<td><strong>Email Address</strong></td>
-						<td>kate@bistro.com</td>
-					</tr>
-					<tr>
-						<td><strong>Contact Person</strong></td>
-						<td>Kate</td>
+						<td>{{ $project['email_address'] }}</td>
 					</tr>
 					<tr>
 						<td><strong>Status</strong></td>
-						<td><span class="label label-warning">Development</span></td>
+						<td><span class="label label-warning">{{ $project['project_status'] }}</span></td>
 					</tr>
 					<tr>
 						<td><strong>Date Initiated</strong></td>
-						<td>January 20,2014 3:00 PM</td>
+						<td>{{ date('F j, Y',strtotime($project['date_initiated'])) }}</td>
 					</tr>
 					<tr>
 						<td><strong>Due Date</strong></td>
-						<td>January 24,2014 3:00PM</td>
+						<td>{{ date('F j, Y',strtotime($project['date_ended'])) }}</td>
 					</tr>
 				</table>
 			  </div><!-- /.panel-body -->
@@ -147,54 +156,27 @@ Project Details Page
 			  </div>
 				<div id="panel-collapse-4" class="collapse in">
 				  <div class="panel-body">
-					<ul class="media-list media-sm media-team">
-					  <li class="media">
-						<a class="pull-left" href="#fakelink">
-						  <img class="media-object img-circle" src="{{ asset('assets/img/avatar/avatar-1.jpg') }}" alt="Avatar">
-						</a>
-						<div class="media-body">
-						  <h4 class="media-heading">Paris Hawker</h4>
-						  <p class="text-danger">Graphic designer</p>
-						</div>
-					  </li>
-					  <li class="media">
-						<a class="pull-left" href="#fakelink">
-						  <img class="media-object img-circle" src="{{ asset('assets/img/avatar/avatar-2.jpg') }}" alt="Avatar">
-						</a>
-						<div class="media-body">
-						  <h4 class="media-heading">Thomas White</h4>
-						  <p class="text-danger">UI / UX designer</p>
-						</div>
-					  </li>
-					  <li class="media">
-						<a class="pull-left" href="#fakelink">
-						  <img class="media-object img-circle" src="{{ asset('assets/img/avatar/avatar-3.jpg') }}" alt="Avatar">
-						</a>
-						<div class="media-body">
-						  <h4 class="media-heading">Doina Slaivici</h4>
-						  <p class="text-danger">Web developer</p>
-						</div>
-					  </li>
-					  <li class="media">
-						<a class="pull-left" href="#fakelink">
-						  <img class="media-object img-circle" src="{{ asset('assets/img/avatar/avatar-4.jpg') }}" alt="Avatar">
-						</a>
-						<div class="media-body">
-						  <h4 class="media-heading">Harry Nichols</h4>
-						  <p class="text-danger">Web designer</p>
-						</div>
-					  </li>
-					  <li class="media">
-						<a class="pull-left" href="#fakelink">
-						  <img class="media-object img-circle" src="{{ asset('assets/img/avatar/avatar-5.jpg') }}" alt="Avatar">
-						</a>
-						<div class="media-body">
-						  <h4 class="media-heading">Mihaela Cihac</h4>
-						  <p class="text-danger">Project manager</p>
-						</div>
-					  </li>
+				  @if(count($users) > 0)
+				  <ul class="media-list media-sm media-team">
+						@foreach($users as $user)
+						  <li class="media">
+							<a class="pull-left" href="#fakelink">
+							  <img class="media-object img-circle" src="{{ asset('assets/img/avatar/avatar-1.jpg') }}" alt="Avatar">
+							</a>
+							<div class="media-body">
+							  <h4 class="media-heading">{{ $user['first_name'].' '.$user['last_name'] }}</h4>
+							  <p class="text-danger">{{ $user->job->job_name }}</p>
+							</div>
+						  </li>
+						@endforeach
 					</ul>
 					<button class="btn btn-primary btn-block"><i class="glyphicon glyphicon-plus"></i> Add User</button>
+					@else
+					<div class="alert alert-info square fade in alert-dismissable" style="margin-top:10px;">
+					  <strong>Information!</strong> This project doesn't have any assigned users. Would you like to assign
+					  <a href="{{ URL::route('projects.edit', $project['project_id']) }}" class="alert-link">now </a>?
+					</div>
+					@endif
 				  </div><!-- /.panel-body -->
 				</div><!-- /.collapse in -->
 			</div><!-- /.panel panel-default -->

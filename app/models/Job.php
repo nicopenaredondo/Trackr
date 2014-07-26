@@ -26,4 +26,9 @@ class Job extends Eloquent {
 	{
 		return $this->belongsTo('Department');
 	}
+
+	public function userProfile()
+	{
+		return $this->hasMany('UserProfile');
+	}
 }

@@ -133,4 +133,5 @@ abstract class EloquentBaseRepository
 		return $this->model->where($identifier, 'LIKE', '%'.$query.'%');
 	}
 
+
 }

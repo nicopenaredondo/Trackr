@@ -1,6 +1,47 @@
 <?php
 
-class ProjectsController extends BaseController {
+//repository
+use Trackr\Repository\Projects\InterfaceProjectsRepository as ProjectRepository;
+use Trackr\Repository\Departments\InterfaceDepartmentsRepository as DepartmentRepository;
+
+//services
+use Trackr\Services\Validation\ProjectsValidator as ProjectValidator;
+
+class ProjectsController extends BaseController
+{
+
+	/**
+	 * Project Repository
+	 *
+	 * @param  \Trackr\Repository\Projects\InterfaceProjectsRepository
+	 */
+	protected $project;
+
+	/**
+	 * Department Repository
+	 *
+	 * @param  \Trackr\Repository\Departments\InterfaceDepartmentsRepository
+	 */
+	protected $department;
+
+	/**
+	 * project Validation Services
+	 *
+	 * @param  \Trackr\Services\Validation\ProjectsValidator
+	 */
+	protected $validator;
+
+	public function __construct(
+		ProjectRepository $project,
+		DepartmentRepository $department,
+		ProjectValidator $validator
+	)
+	{
+		$this->project 		= $project;
+		$this->department = $department;
+		$this->validator 	= $validator;
+	}
+
 
 	/**
 	 * Display a listing of the resource.
@@ -11,7 +52,9 @@ class ProjectsController extends BaseController {
 	public function index()
 	{
 		//
-		return View::make('backend.projects.index');
+		$listOfProjects = $this->project->paginate(12);
+		return View::make('backend.projects.index')
+							->with('listOfProjects', $listOfProjects);
 	}
 
 	/**
@@ -23,7 +66,9 @@ class ProjectsController extends BaseController {
 	public function create()
 	{
 		//
-		return View::make('backend.projects.create');
+		$listOfDepartments = $this->department->make(['jobs.userProfile'])->get();
+		return View::make('backend.projects.create')
+							->with('listOfDepartments', $listOfDepartments);
 	}
 
 	/**
@@ -35,7 +80,22 @@ class ProjectsController extends BaseController {
 	public function store()
 	{
 		//
-		dd(Input::all());
+		if($this->validator->isValidForCreation(Input::all())){
+			DB::beginTransaction();
+			if($this->project->create(Input::all())){
+				DB::commit();
+				Session::flash('success', 'You have successfully created a new project');
+				return Redirect::route('projects.index');
+			}else{
+				DB::rollBack();
+				Session::flash('error', 'Failed to create a new project. Please try again later');
+				return Redirect::route('projects.index');
+			}
+		}else{
+			return Redirect::route('projects.create')
+			              ->withErrors($this->validator->errors())
+			              ->withInput();
+		}
 	}
 
 	/**
@@ -48,7 +108,11 @@ class ProjectsController extends BaseController {
 	public function show($id)
 	{
 		//
-		return View::make('backend.projects.show');
+		$project = $this->project->find($id);
+		$users   = $project->users;
+		return View::make('backend.projects.show')
+							->with('project', $project)
+							->with('users', $users);
 	}
 
 	/**
@@ -61,6 +125,11 @@ class ProjectsController extends BaseController {
 	public function edit($id)
 	{
 		//
+		$listOfDepartments = $this->department->make(['jobs.userProfile'])->get();
+		$project = $this->project->find($id);
+		return View::make('backend.projects.edit')
+							->with('project', $project)
+							->with('listOfDepartments', $listOfDepartments);
 	}
 
 	/**
@@ -73,6 +142,22 @@ class ProjectsController extends BaseController {
 	public function update($id)
 	{
 		//
+		if($this->validator->isValidForCreation(Input::all())){
+			DB::beginTransaction();
+			if($this->project->update($id,Input::all())){
+				DB::commit();
+				Session::flash('success', 'You have successfully edited this project');
+				return Redirect::route('projects.show', $id);
+			}else{
+				DB::rollBack();
+				Session::flash('error', 'Failed to edit this project. Please try again later');
+				return Redirect::route('projects.show', $id);
+			}
+		}else{
+			return Redirect::route('projects.edit', $id)
+			              ->withErrors($this->validator->errors())
+			              ->withInput();
+		}
 	}
 
 	/**
@@ -85,6 +170,13 @@ class ProjectsController extends BaseController {
 	public function destroy($id)
 	{
 		//
+		$project = $this->project->find($id);
+		if ($this->project->delete($project)) {
+			Session::flash('success', 'You have successfully deleted "<strong>'. $project['project_name'] .'</strong>"');
+			return Redirect::route('projects.index');
+		}
+			Session::flash('error', 'Failed to delete project "<strong>'. $project['project_name'] .'</strong>"');
+			return Redirect::route('projects.index');
 	}
 
 }

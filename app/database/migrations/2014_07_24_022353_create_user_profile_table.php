@@ -16,6 +16,7 @@ class CreateUserProfileTable extends Migration {
 		{
 			$table->increments('user_profile_id');
 			$table->integer('user_id');
+			$table->integer('department_id');
 			$table->integer('job_id');
 			$table->string('first_name', 64);
 			$table->string('last_name', 64);

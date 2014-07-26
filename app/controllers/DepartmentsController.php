@@ -37,7 +37,7 @@ class DepartmentsController extends BaseController
 	public function index()
 	{
 		//
-		$listOfDepartments = $this->department->paginate(10);
+		$listOfDepartments = $this->department->paginate(12);
 		return View::make('backend.departments.index')
 							->with('listOfDepartments', $listOfDepartments);
 	}

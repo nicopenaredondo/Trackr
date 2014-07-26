@@ -14,7 +14,7 @@ class UserProfile extends Eloquent {
 	 *
 	 * @var string
 	 */
-	protected $primaryKey = 'user_profile_id';
+	protected $primaryKey = 'user_id';
 
 	/**
 	 * The fields that are allowed for mass assignment
@@ -30,5 +30,10 @@ class UserProfile extends Eloquent {
 	public function user()
 	{
 		return $this->belongsTo('User');
+	}
+
+	public function job()
+	{
+		return $this->belongsTo('Job');
 	}
 }
