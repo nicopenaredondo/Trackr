@@ -170,7 +170,7 @@ Project Details Page
 						  </li>
 						@endforeach
 					</ul>
-					<button class="btn btn-primary btn-block"><i class="glyphicon glyphicon-plus"></i> Add User</button>
+					<a href="{{ URL::route('projects.edit', $project['project_id']) }}" class="btn btn-primary btn-block"><i class="fa fa-plus"></i> Add User</a>
 					@else
 					<div class="alert alert-info square fade in alert-dismissable" style="margin-top:10px;">
 					  <strong>Information!</strong> This project doesn't have any assigned users. Would you like to assign

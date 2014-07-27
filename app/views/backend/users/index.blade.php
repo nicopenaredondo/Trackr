@@ -35,7 +35,7 @@ List of User Page
 				  </a>
 				  <div class="media-body">
 					<h4 class="media-heading">{{ $user['user_profile']['first_name'] .' '. $user['user_profile']['last_name'] }}</h4>
-					<p class="text-muted">Project Manager</p>
+					<p class="text-muted">{{ $user['user_profile']['job']['job_name'] }}</p>
 				  </div>
 				  <div class="right-button">
 						<a href="{{ URL::route('users.show', $user['user_id']) }}" class="btn btn-primary btn-xs"><i class="fa fa-user"></i> View Profile</a>
