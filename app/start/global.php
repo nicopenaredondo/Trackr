@@ -89,3 +89,23 @@ require app_path().'/filters.php';
 */
 
 require app_path().'/macros.php';
+
+/*
+|--------------------------------------------------------------------------
+| Require The Macros File
+|--------------------------------------------------------------------------
+|
+|
+*/
+
+require app_path().'/helpers.php';
+
+/*
+|--------------------------------------------------------------------------
+| Register subscriptions
+|--------------------------------------------------------------------------
+|
+*/
+
+Event::subscribe('Trackr\Handlers\UserEventHandler');
+Event::subscribe('Trackr\Handlers\AuthEventHandler');
