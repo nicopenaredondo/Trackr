@@ -4,10 +4,12 @@ use User, UserProfile;
 use Department;
 use Job;
 use Project;
+use Attendance;
 use Trackr\Repository\Users\EloquentUsersRepository;
 use Trackr\Repository\Departments\EloquentDepartmentsRepository;
 use Trackr\Repository\Jobs\EloquentJobsRepository;
 use Trackr\Repository\Projects\EloquentProjectsRepository;
+use Trackr\Repository\Attendances\EloquentAttendancesRepository;
 use Illuminate\Support\ServiceProvider;
 
 
@@ -50,6 +52,13 @@ class RepositoryServiceProvider extends ServiceProvider
 			'Trackr\Repository\Projects\InterfaceProjectsRepository',
 		function(){
 				return new EloquentProjectsRepository(new Project);
+		});
+
+		//Attendances Repository
+		$app->bind(
+			'Trackr\Repository\Attendances\InterfaceAttendancesRepository',
+		function(){
+				return new EloquentAttendancesRepository(new Attendance);
 		});
 
 	}
