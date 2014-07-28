@@ -46,7 +46,7 @@ class UsersController extends BaseController
 	public function index()
 	{
 		//
-		$listOfUsers = $this->user->make(['userProfile'])->paginate(12);
+		$listOfUsers = $this->user->make(['userProfile.job'])->paginate(12);
 		return View::make('backend.users.index')
 							->with('listOfUsers', $listOfUsers);
 	}
