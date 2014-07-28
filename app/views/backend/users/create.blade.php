@@ -81,6 +81,18 @@ Add User Page
 					<hr>
 
 					<div class="form-group has-feedback">
+						<label class="col-lg-3 control-label">Group Type</label>
+						<div class="col-lg-9">
+							<select name="group_id" class="form-control chosen-select" required="" data-bv-notempty-message="The group type is required and cannot be empty">
+								<option value="1">Administrator</option>
+								<option value="2">Executive</option>
+								<option value="3">Employee</option>
+								<option value="4">OJT/Intern</option>
+							</select>
+						</div>
+					</div>
+
+					<div class="form-group has-feedback">
 						<label class="col-lg-3 control-label">Username</label>
 						<div class="col-lg-9">
 							<input type="text" class="form-control" name="username" value="{{ Input::old('username') }}" placeholder="Enter the username.." data-bv-message="The username is not valid" required="" data-bv-notempty-message="The username is required and cannot be empty" pattern="[a-zA-Z0-9_\.]+" data-bv-regexp-message="The username can only consist of alphabetical, number, dot and underscore" data-bv-stringlength="true" data-bv-stringlength-min="6" data-bv-stringlength-max="30" data-bv-stringlength-message="The username must be more than 6 and less than 30 characters long" data-bv-different="true" data-bv-different-field="password" data-bv-different-message="The username and password cannot be the same as each other"  data-bv-field="username"><i class="form-control-feedback" data-bv-field="username" style="display: none;"></i>

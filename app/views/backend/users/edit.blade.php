@@ -82,6 +82,18 @@ Edit User Page
 					<hr>
 
 					<div class="form-group has-feedback">
+						<label class="col-lg-3 control-label">Group Type</label>
+						<div class="col-lg-9">
+							<select name="group_id" class="form-control chosen-select" required="" data-bv-notempty-message="The group type is required and cannot be empty">
+								<option value="1" {{ ($user['group_id'] == 1) ? 'selected' : '' }}>Administrator</option>
+								<option value="2" {{ ($user['group_id'] == 2) ? 'selected' : '' }}>Executive</option>
+								<option value="3" {{ ($user['group_id'] == 3) ? 'selected' : '' }}>Employee</option>
+								<option value="4" {{ ($user['group_id'] == 4) ? 'selected' : '' }}>OJT/Intern</option>
+							</select>
+						</div>
+					</div>
+
+					<div class="form-group has-feedback">
 						<label class="col-lg-3 control-label">Username</label>
 						<div class="col-lg-9">
 							<p class="form-control-static">{{ $user['username'] }}</p>
