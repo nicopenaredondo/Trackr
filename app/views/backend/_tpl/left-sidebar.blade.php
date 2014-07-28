@@ -2,26 +2,9 @@
 <div class="sidebar-left sidebar-nicescroller">
 	<ul class="sidebar-menu">
 		<li class="static">Navigation</li>
-		{{ HTML::activeLink(URL::route('app.dashboard'), 'Dashboard', '' , 'fa-home icon-sidebar') }}
-		{{ HTML::activeLink(URL::route('users.index'), 'Users', 'users' , 'fa-users icon-sidebar') }}
-		{{ HTML::activeLink(URL::route('projects.index'), 'Projects', 'projects' , 'fa-list icon-sidebar') }}
-		{{ HTML::activeLink(URL::route('announcements.index'), 'Announcements', 'announcements' , 'fa-bullhorn icon-sidebar') }}
-		<li>
-			<a href="#fakelink">
-				<i class="fa fa-calendar icon-sidebar"></i>
-				<i class="fa chevron-icon-sidebar"></i>
-				Attendances
-			</a>
-		</li>
-		{{ HTML::activeLink(URL::route('departments.index'), 'Departments', 'departments' , 'fa-building icon-sidebar') }}
-		{{ HTML::activeLink(URL::route('jobs.index'), 'Jobs', 'jobs' , 'fa-user icon-sidebar') }}
-		<li>
-			<a href="#fakelink">
-				<i class="fa fa-cogs icon-sidebar"></i>
-				<i class="fa chevron-icon-sidebar"></i>
-				Settings
-			</a>
-		</li>
+		@foreach($left_sidebar_menu as $menu)
+			{{ HTML::activeLink($menu['url'], $menu['name'], $menu['machine_name'], $menu['icon']) }}
+		@endforeach
 	</ul>
 </div><!-- /.sidebar-left -->
 <!-- END SIDEBAR LEFT -->
