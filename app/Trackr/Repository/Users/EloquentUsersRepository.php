@@ -39,9 +39,10 @@ class EloquentUsersRepository extends EloquentBaseRepository implements Interfac
 	}
 
 	public function update($id, $data){
-		$user = $this->userProfile->findOrFail($id);
-		if($user) {
-			$user->fill($data)->save();
+		$user = $this->user->findOrFail($id);
+		$user->fill($data);
+		if($user->save()) {
+			$user->userProfile->fill($data)->save();
 			return true;
 		}
 
