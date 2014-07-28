@@ -11,12 +11,6 @@
 |
 */
 
-Route::get('/',[
-	'as' 		=> 'app.dashboard',
-	'uses'	=> 'BaseController@getDashboard'
-]);
-
-
 Route::get('login',[
 	'as' 		=> 'app.auth.login',
 	'uses'	=> 'AuthController@getLogin'
@@ -42,8 +36,18 @@ Route::post('forgot-password',[
 	'uses'	=> 'AuthController@postForgotPassword'
 ]);
 
-Route::resource('users','UsersController');
-Route::resource('projects','ProjectsController');
-Route::resource('announcements','AnnouncementsController');
-Route::resource('departments','DepartmentsController');
-Route::resource('jobs','JobsController');
+Route::group(['before' =>'auth'],function(){
+
+	Route::get('/',[
+		'as' 		=> 'app.dashboard',
+		'uses'	=> 'BaseController@getDashboard'
+	]);
+	Route::resource('users','UsersController');
+	Route::resource('projects','ProjectsController');
+	Route::resource('announcements','AnnouncementsController');
+	Route::resource('departments','DepartmentsController');
+	Route::resource('jobs','JobsController');
+	Route::resource('attendances','AttendancesController');
+
+
+});
