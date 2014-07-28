@@ -14,6 +14,11 @@
 App::before(function($request)
 {
 	//
+	if (Auth::check()) {
+		# code...
+		View::share('navbarUser', User::getAuthName());
+		View::share('left_sidebar_menu', getMenuByGroup(Auth::user()->group_id));
+	}
 });
 
 
