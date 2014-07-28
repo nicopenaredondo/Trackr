@@ -34,7 +34,7 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 	 * The fields that are allowed for mass assignment
 	 * @var array
 	 */
-	protected $fillable = ['username','password'];
+	protected $fillable = ['group_id' ,'username','password'];
 
 	public function setPasswordAttribute($value) {
         $this->attributes['password'] = Hash::make($value);
@@ -48,6 +48,16 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 	public function projects()
 	{
 		return $this->belongsToMany('Project', 'project_user', 'user_id', 'project_id');
+	}
+
+	public static function getAuthName()
+	{
+		return Auth::user()->userProfile->first_name.' '.Auth::user()->userProfile->last_name;
+	}
+
+	public function attendances()
+	{
+		return $this->hasMany('Attendance');
 	}
 
 }
