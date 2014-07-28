@@ -155,6 +155,22 @@ User Information Page
 								<h4 class="small-heading more-margin-bottom">Account Information</h4>
 								<form class="form-horizontal" role="form">
 									<div class="form-group">
+										<label class="col-sm-3 control-label">Group Type</label>
+										<div class="col-sm-9">
+										  <p class="form-control-static">
+										  	@if($user['group_id'] == 1)
+										  	Administrator
+										  	@elseif($user['group_id'] == 2)
+										  	Executive
+										  	@elseif($user['group_id'] == 3)
+										  	Employee
+										  	@elseif($user['group_id'] == 4)
+										  	OJT/Intern
+										  	@endif
+										  </p>
+										</div>
+									</div><!-- /.form-group -->
+									<div class="form-group">
 										<label class="col-sm-3 control-label">Username</label>
 										<div class="col-sm-9">
 										  <p class="form-control-static">{{ $user['username'] }}</p>
