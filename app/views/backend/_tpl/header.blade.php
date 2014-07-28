@@ -82,14 +82,13 @@
 					<li class="dropdown">
 					  <a href="#fakelink" class="dropdown-toggle" data-toggle="dropdown">
 						<img src="{{ asset('assets/img/avatar/avatar-1.jpg') }}" class="avatar img-circle" alt="Avatar">
-						Hi, <strong>JC Dela Cruz</strong>
+						Hi, <strong>{{ $navbarUser }}</strong>
 					  </a>
 					  <ul class="dropdown-menu square primary margin-list-rounded with-triangle">
 						<li><a href="#fakelink">Account setting</a></li>
 						<li><a href="#fakelink">Change password</a></li>
 						<li class="divider"></li>
-						<li><a href="lock-screen.html">Lock screen</a></li>
-						<li><a href="login.html">Log out</a></li>
+						<li><a href="{{ URL::route('app.auth.logout') }}">Log out</a></li>
 					  </ul>
 					</li>
 				</ul>
