@@ -35,6 +35,7 @@ List of Attendance Page
 					<tr>
 						<th>Time In</th>
 						<th>Time Out</th>
+						<th>Total Hours</th>
 						<th>Status</th>
 					</tr>
 				</thead>
@@ -43,6 +44,7 @@ List of Attendance Page
 					<tr>
 						<td>{{ $attendance['time_in'] }}</td>
 						<td>{{ $attendance['time_out'] }}</td>
+						<td>{{ $attendance['total_hours'] }}</td>
 						<td>{{ $attendance['status']  }}</td>
 					</tr>
 					@endforeach

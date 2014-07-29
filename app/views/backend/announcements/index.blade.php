@@ -14,92 +14,50 @@ List of Announcements Page
 	</ol>
 	<!-- End breadcrumb -->
 
+	@include('notification')
 	<div class="row">
 		<div class="col-md-12">
-			<a href="{{ URL::route('users.create') }}" class="btn btn-info">
+			<a href="{{ URL::route('announcements.create') }}" class="btn btn-info">
 			<i class="fa fa-plus"></i>
 				Add new announcement
 			</a>
 		</div>
 	</div>
+	@if(count($listOfAnnouncements) > 0)
 	<div class="row" style="margin-top:10px;">
-		<div class="col-sm-4">
-			<!-- BEGIN STATIC IMAGE POST -->
-			<div class="featured-post-wide">
-				<img src="assets/img/photo/medium/img-1.jpg" class="featured-img" alt="Image">
-				<div class="featured-text relative">
-					<h3><a href="#fakelink">Static image post, check this out</a></h3>
-					<p class="date">2 hours ago</p>
-					<p>
-					Suscipit lobortis nisl ut aliquip ex ea commodo consequat.
-					</p>
-					<p class="additional-post-wrap">
-						<span class="additional-post"><i class="fa fa-user"></i>by <a href="#fakelink">Admin</a></span>
-						<span class="additional-post"><i class="fa fa-clock-o"></i><a href="#fakelink">April 20</a></span>
-					</p>
-					<hr>
-					<p class="text-right"><button class="btn btn-success">Read more</button></p>
-				</div><!-- /.featured-text -->
-			</div><!-- /.featured-post-wide -->
-			<!-- END STATIC IMAGE POST -->
-		</div><!-- /.col-sm-4 -->
-
-		<div class="col-sm-4">
-			<!-- BEGIN STATIC IMAGE POST -->
-			<div class="featured-post-wide">
-				<img src="assets/img/photo/medium/img-1.jpg" class="featured-img" alt="Image">
-				<div class="featured-text relative">
-					<h3><a href="#fakelink">Static image post, check this out</a></h3>
-					<p class="date">2 hours ago</p>
-					<p>
-					Suscipit lobortis nisl ut aliquip ex ea commodo consequat.
-					</p>
-					<p class="additional-post-wrap">
-						<span class="additional-post"><i class="fa fa-user"></i>by <a href="#fakelink">Admin</a></span>
-						<span class="additional-post"><i class="fa fa-clock-o"></i><a href="#fakelink">April 20</a></span>
-					</p>
-					<hr>
-					<p class="text-right"><button class="btn btn-success">Read more</button></p>
-				</div><!-- /.featured-text -->
-			</div><!-- /.featured-post-wide -->
-			<!-- END STATIC IMAGE POST -->
-		</div><!-- /.col-sm-4 -->
-
-		<div class="col-sm-4">
-			<!-- BEGIN STATIC IMAGE POST -->
-			<div class="featured-post-wide">
-				<img src="assets/img/photo/medium/img-1.jpg" class="featured-img" alt="Image">
-				<div class="featured-text relative">
-					<h3><a href="#fakelink">Static image post, check this out</a></h3>
-					<p class="date">2 hours ago</p>
-					<p>
-					Suscipit lobortis nisl ut aliquip ex ea commodo consequat.
-					</p>
-					<p class="additional-post-wrap">
-						<span class="additional-post"><i class="fa fa-user"></i>by <a href="#fakelink">Admin</a></span>
-						<span class="additional-post"><i class="fa fa-clock-o"></i><a href="#fakelink">April 20</a></span>
-					</p>
-					<hr>
-					<p class="text-right"><button class="btn btn-success">Read more</button></p>
-				</div><!-- /.featured-text -->
-			</div><!-- /.featured-post-wide -->
-			<!-- END STATIC IMAGE POST -->
-		</div><!-- /.col-sm-4 -->
-
-	</div>
-	<div class="row">
-		<div class="col-md-12 text-center">
-			<ul class="pagination primary">
-			  <li class="disabled"><a href="#fakelink">«</a></li>
-			  <li class="disabled"><a href="#fakelink">‹</a></li>
-			  <li class="active"><a href="#fakelink">1</a></li>
-			  <li><a href="#fakelink">2</a></li>
-			  <li><a href="#fakelink">3</a></li>
-			  <li><a href="#fakelink">...</a></li>
-			  <li><a href="#fakelink">15</a></li>
-			  <li><a href="#fakelink">›</a></li>
-			  <li><a href="#fakelink">»</a></li>
-			</ul>
+		<div class="col-md-12">
+			<table class="table table-condensed table-striped">
+				<thead>
+					<tr>
+						<th>Id</th>
+						<th>Name</th>
+						<th>Short Description</th>
+						<th>Action</th>
+					</tr>
+				</thead>
+				<tbody>
+					@foreach($listOfAnnouncements as $announcement)
+					<tr>
+						<td>{{ $announcement['announcement_id'] }}</td>
+						<td>{{ $announcement['announcement_title'] }}</td>
+						<td>{{ Str::limit(strip_tags($announcement['announcement_body']),100); }}</td>
+						<td><a href="{{ URL::route('announcements.show', $announcement['announcement_id']) }}" class="btn btn-xs btn-success"><i class="fa fa-eye"></i> View Announcement</a></td>
+					</tr>
+					@endforeach
+				</tbody>
+			</table>
 		</div>
 	</div>
+
+	<div class="row">
+		<div class="col-md-12 text-center">
+			{{ $listOfAnnouncements->links() }}
+		</div>
+	</div>
+	@else
+		<div class="alert alert-info square fade in alert-dismissable" style="margin-top:10px;">
+		  <strong>Information!</strong> You don't have any announcements in the system. Would you like to create
+		  <a href="{{ URL::route('announcements.create') }}" class="alert-link">one </a>?
+		</div>
+	@endif
 @stop

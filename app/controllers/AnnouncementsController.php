@@ -1,6 +1,32 @@
 <?php
 
-class AnnouncementsController extends BaseController {
+//repository
+use Trackr\Repository\Announcements\InterfaceAnnouncementsRepository as AnnouncementRepository;
+//services
+use Trackr\Services\Validation\AnnouncementsValidator as AnnouncementValidator;
+
+class AnnouncementsController extends BaseController
+{
+
+	/**
+	 * Announcement Repository
+	 *
+	 * @param  \Trackr\Repository\Announcements\InterfaceAnnouncementsRepository
+	 */
+	protected $Announcement;
+
+	/**
+	 * Announcement Validation Services
+	 *
+	 * @param  \Trackr\Services\Validation\AnnouncementsValidator
+	 */
+	protected $validator;
+
+	public function __construct(AnnouncementRepository $announcement, AnnouncementValidator $validator)
+	{
+		$this->announcement = $announcement;
+		$this->validator 	= $validator;
+	}
 
 	/**
 	 * Display a listing of the resource.
@@ -11,7 +37,9 @@ class AnnouncementsController extends BaseController {
 	public function index()
 	{
 		//
-		return View::make('backend.announcements.index');
+		$listOfAnnouncements = $this->announcement->paginate(15);
+		return View::make('backend.announcements.index')
+							->with('listOfAnnouncements', $listOfAnnouncements);
 	}
 
 	/**
@@ -23,6 +51,7 @@ class AnnouncementsController extends BaseController {
 	public function create()
 	{
 		//
+		return View::make('backend.announcements.create');
 	}
 
 	/**
@@ -34,6 +63,22 @@ class AnnouncementsController extends BaseController {
 	public function store()
 	{
 		//
+		if($this->validator->isValidForCreation(Input::all())){
+			DB::beginTransaction();
+			if($this->announcement->create(Input::all())){
+				DB::commit();
+				Session::flash('success', 'You have successfully created a new announcement');
+				return Redirect::route('announcements.index');
+			}else{
+				DB::rollBack();
+				Session::flash('error', 'Failed to create a new announcement. Please try again later');
+				return Redirect::route('announcements.index');
+			}
+		}else{
+			return Redirect::route('announcements.create')
+			              ->withErrors($this->validator->errors())
+			              ->withInput();
+		}
 	}
 
 	/**
@@ -46,6 +91,9 @@ class AnnouncementsController extends BaseController {
 	public function show($id)
 	{
 		//
+		$announcement = $this->announcement->find($id);
+		return View::make('backend.announcements.show')
+							->with('announcement', $announcement);
 	}
 
 	/**
@@ -58,6 +106,9 @@ class AnnouncementsController extends BaseController {
 	public function edit($id)
 	{
 		//
+		$announcement = $this->announcement->find($id);
+		return View::make('backend.announcements.edit')
+							->with('announcement', $announcement);
 	}
 
 	/**
@@ -70,6 +121,22 @@ class AnnouncementsController extends BaseController {
 	public function update($id)
 	{
 		//
+		if($this->validator->isValidForUpdate(Input::all())){
+			DB::beginTransaction();
+			if($this->announcement->update($id, Input::all())){
+				DB::commit();
+				Session::flash('success', 'You have successfully updated this announcement');
+				return Redirect::route('announcements.show', $id);
+			}else{
+				DB::rollBack();
+				Session::flash('error', 'Failed to update this announcement. Please try again later');
+				return Redirect::route('announcements.show', $id);
+			}
+		}else{
+			return Redirect::route('announcements.edit', $id)
+			              ->withErrors($this->validator->errors())
+			              ->withInput();
+		}
 	}
 
 	/**
@@ -82,6 +149,13 @@ class AnnouncementsController extends BaseController {
 	public function destroy($id)
 	{
 		//
+		$announcement = $this->announcement->find($id);
+		if ($this->announcement->delete($announcement)) {
+			Session::flash('success', 'You have successfully deleted "<strong>'. $announcement['announcement_title'] .'</strong>"');
+			return Redirect::route('announcements.index');
+		}
+			Session::flash('error', 'Failed to delete announcement "<strong>'. $announcement['announcement_title'] .'</strong>"');
+			return Redirect::route('departments.index');
 	}
 
 }
