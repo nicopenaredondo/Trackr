@@ -39,7 +39,7 @@ function getMenuByGroup($group_id)
 			[
 				'name' 	=> 'Departments',
 				'machine_name' => 'departments',
-				'url'  	=> URL::route('attendances.index'),
+				'url'  	=> URL::route('departments.index'),
 				'icon'	=> 'fa-building icon-sidebar'
 			],
 			[
