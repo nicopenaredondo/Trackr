@@ -36,7 +36,7 @@ class Attendance extends Eloquent {
 
 	public function getTotalHoursAttribute($value)
 	{
-		if($this->time_out != '0000-00-00'){
+		if(!is_null($this->time_out)){
 			$inHour 	 	= date('H', strtotime($this->time_in));
 			$inMinute  	= date('i', strtotime($this->time_in));
 			$inSeconds 	= date('s', strtotime($this->time_in));
@@ -62,9 +62,8 @@ class Attendance extends Eloquent {
 	{
 		if(!is_null($value)){
 			return date('F j, Y h:i:s A', strtotime($value));
-		}else{
-			return 'Not available yet';
 		}
+			return NULL;
 	}
 
 	public function getStatusAttribute($value)
@@ -82,7 +81,7 @@ class Attendance extends Eloquent {
 		$dateToday 	= date('Y-m-d', strtotime(\Carbon\Carbon::today()));
 		$dateTimeIn = date('Y-m-d', strtotime($this->time_in));
 		//check if there's no logout
-		if($this->time_out == 'Not available yet'){
+		if(is_null($this->time_out)){
 			//if the date is not current and there's no logout registered
 			if ($dateToday != $dateTimeIn) {
 				return 'Failed to logout';
