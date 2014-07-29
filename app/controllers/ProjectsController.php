@@ -171,7 +171,7 @@ class ProjectsController extends BaseController
 	{
 		//
 		$project = $this->project->find($id);
-		if ($this->project->delete($project)) {
+		if ($project->delete($project)) {
 			Session::flash('success', 'You have successfully deleted "<strong>'. $project['project_name'] .'</strong>"');
 			return Redirect::route('projects.index');
 		}
