@@ -18,11 +18,11 @@ List of Attendance Page
 
 	@if($isLogin == true)
 		@if($isLogout == false)
-		{{ Form::open(['route' => 'attendances.store','class' => 'pull-right']) }}
+		{{ Form::open(['route' => 'attendances.store']) }}
 		<button type="submit"  class="btn btn-lg btn-primary">Logout</button>
 		@endif
 	@else
-		{{ Form::open(['route' => 'attendances.store','class' => 'pull-right']) }}
+		{{ Form::open(['route' => 'attendances.store']) }}
 		<button type="submit"  class="btn btn-lg btn-primary">Login</button>
 	@endif
 
