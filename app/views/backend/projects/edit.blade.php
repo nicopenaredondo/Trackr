@@ -64,6 +64,17 @@ Edit Project Page
 						</div>
 					</div>
 
+					<div class="form-group has-feedback">
+						<label class="col-lg-3 control-label">Status</label>
+						<div class="col-lg-9">
+							<select name="project_status" id="" class="form-control" required=""  data-bv-notempty-message="The contact number is required and cannot be empty" data-bv-field="project_status">
+								<option value="Development" {{ ($project['project_status'] == 'Development') ? 'selected' : '' }}>Development</option>
+								<option value="Deployed" 		{{ ($project['project_status'] == 'Deployed') ? 'selected' : '' }}>Deployed</option>
+								<option value="Escalation"  {{ ($project['project_status'] == 'Escalation') ? 'selected' : '' }}>Escalation</option>
+							</select>
+						</div>
+					</div>
+
 
 					<h3 class="small-title">Assign Users</h3>
 					<hr>

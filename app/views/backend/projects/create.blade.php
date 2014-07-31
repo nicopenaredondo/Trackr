@@ -52,23 +52,23 @@ Add Project Page
 					<div class="form-group has-feedback">
 						<label class="col-lg-3 control-label">Date Initiated</label>
 						<div class="col-lg-9">
-							<input type="text" class="form-control datepicker" name="date_initiated" value="{{ Input::old('date_initiated') }}"  placeholder="Choose date initiated.." required="" data-bv-date="false" data-bv-date-format="YYYY-MM-DD" data-bv-date-message="The date initiated is not valid" data-bv-field="date_initiated"><i class="form-control-feedback" data-bv-field="date_initiated" style="display: none;"></i>
+							<input type="text" class="form-control date_mask" name="date_initiated" value="{{ Input::old('date_initiated') }}"  placeholder="YYYY-MM-DD" required="" data-bv-date="false" data-bv-date-format="YYYY-MM-DD" data-bv-date-message="The date initiated is not valid" data-bv-field="date_initiated"><i class="form-control-feedback" data-bv-field="date_initiated" style="display: none;"></i>
 						</div>
 					</div>
 
 					<div class="form-group has-feedback">
 						<label class="col-lg-3 control-label">Date Ended</label>
 						<div class="col-lg-9">
-							<input type="text" class="form-control datepicker" name="date_ended" value="{{ Input::old('date_ended') }}" placeholder="Choose date ended.." required="" data-bv-date="false" data-bv-date-format="YYYY/MM/DD" data-bv-date-message="The date ended is not valid" data-bv-field="date_ended"><i class="form-control-feedback" data-bv-field="date_ended" style="display: none;"></i>
+							<input type="text" class="form-control date_mask" name="date_ended" value="{{ Input::old('date_ended') }}" placeholder="YYYY-MM-DD" required="" data-bv-date="false" data-bv-date-format="YYYY/MM/DD" data-bv-date-message="The date ended is not valid" data-bv-field="date_ended"><i class="form-control-feedback" data-bv-field="date_ended" style="display: none;"></i>
 						</div>
 					</div>
 
 
 					<h3 class="small-title">Assign Users</h3>
 					<hr>
-
+					@foreach(array_chunk($listOfDepartments, 3) as $rowDepartments)
 					<div class="row">
-						@foreach($listOfDepartments as $department)
+						@foreach($rowDepartments as $department)
 						<div class="col-sm-6 col-md-4">
 							<!-- BEGIN TASK LIST -->
 							<div class="panel panel-success panel-no-border task-list-wrap">
@@ -101,6 +101,7 @@ Add Project Page
 						</div>
 						@endforeach
 					</div>
+					@endforeach
 			</div>
 			<button type="submit" class="btn btn-primary btn-block btn-lg btn-square">Submit Information</button>
 			{{ Form::close() }}
@@ -112,6 +113,7 @@ Add Project Page
 <script>
 	$(document).ready(function(){
 		$('#projectRegistrationForm').bootstrapValidator();
+		$('.date_mask').mask('0000-00-00');
 	});
 </script>
 @stop
