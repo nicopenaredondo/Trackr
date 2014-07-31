@@ -16,13 +16,6 @@ List of Attendance Page
 
 	@include('notification')
 	@if(count($listOfAttendances) > 0)
-	<div class="row">
-		<div class="col-md-12">
-			<a href="" class="btn btn-info pull-right"><i class="fa fa-print"></i>
-				Export To Excel
-			</a>
-		</div>
-	</div>
 	<div class="row" style="margin-top:10px;">
 		<div class="col-md-12">
 			<table class="table table-bordered table-striped">
