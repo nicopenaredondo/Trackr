@@ -16,7 +16,7 @@ class AuthController extends BaseController
 		];
 
 		if(Auth::attempt($credentials)){
-			return Redirect::route('app.dashboard');
+			return Redirect::intended();
 		}else{
 			return Redirect::route('app.auth.login')
 			               ->with('error','Invalid username or password');
