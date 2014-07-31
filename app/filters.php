@@ -93,3 +93,14 @@ Route::filter('csrf', function()
 		throw new Illuminate\Session\TokenMismatchException;
 	}
 });
+
+
+Route::filter('check-access', function(){
+	$permissionList = getPermissionByGroup(Auth::user()->group_id);
+	$segmentUrl 		= Request::segment(1);
+
+	foreach($permissionList as $permission){
+		$permissionNameList[] = $permission['permission_name'];
+	}
+	if(!in_array($segmentUrl, $permissionNameList)) return App::abort(404);
+});
