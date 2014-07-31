@@ -133,5 +133,29 @@ abstract class EloquentBaseRepository
 		return $this->model->where($identifier, 'LIKE', '%'.$query.'%');
 	}
 
+	/**
+	 * Counts all the row in the model
+	 *
+	 * @return mixed
+	 */
+	public function count()
+	{
+		return $this->all()->count();
+	}
+
+	/**
+	 * Get the most recent record
+	 *
+	 * @param integer $count
+	 * @return collection
+	 */
+	public function getRecentRecord($count)
+	{
+		return $this->model->orderBy('created_at', 'DESC')
+		                   ->take($count)
+		                   ->get();
+	}
+
+
 
 }
