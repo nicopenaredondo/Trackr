@@ -26,16 +26,6 @@ Route::get('logout',[
 	'uses'	=> 'AuthController@getLogout'
 ]);
 
-Route::get('forgot-password',[
-	'as' 		=> 'app.auth.forgot-password',
-	'uses'	=> 'AuthController@getForgotPassword'
-]);
-
-Route::post('forgot-password',[
-	'as' 		=> 'app.auth.forgot-password.process',
-	'uses'	=> 'AuthController@postForgotPassword'
-]);
-
 Route::group(['before' =>'auth'],function(){
 
 	Route::get('/',[
@@ -49,5 +39,18 @@ Route::group(['before' =>'auth'],function(){
 	Route::resource('jobs','JobsController');
 	Route::resource('attendances','AttendancesController');
 
+	Route::get('change-password',[
+		'as' 		=> 'app.change-password',
+		'uses'	=> 'BaseController@getChangePassword'
+	]);
 
+	Route::post('change-password',[
+		'as' 		=> 'app.change-password.process',
+		'uses'	=> 'BaseController@postChangePassword'
+	]);
+
+	Route::get('users/{userId}/edit/reset-password',[
+		'as' 		=> 'users.reset-password',
+		'uses'	=> 'UsersController@getResetPassword'
+	]);
 });
