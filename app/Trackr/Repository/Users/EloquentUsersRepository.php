@@ -48,4 +48,11 @@ class EloquentUsersRepository extends EloquentBaseRepository implements Interfac
 
 		return false;
 	}
+
+	public function getUsersByGroupId($groupId)
+	{
+		return $this->user->whereGroupId($groupId)
+                 			->with('userProfile')
+		                  ->get();
+	}
 }
