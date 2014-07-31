@@ -38,7 +38,7 @@ Add User Page
 					<div class="form-group has-feedback">
 						<label class="col-lg-3 control-label">Birthday</label>
 						<div class="col-lg-9">
-							<input type="text" class="form-control datepicker" name="birthday" value="{{ Input::old('birthday') }}" placeholder="Enter the birthday.." required="" data-bv-notempty-message="The birthday is required and cannot be empty" data-bv-date="true" data-date-format="yyyy-mm-dd" data-bv-date-format="YYYY-MM-DD" data-bv-date-message="The birthday is not valid" data-bv-field="birthday"><i class="form-control-feedback" data-bv-field="birthday" style="display: none;"></i>
+							<input type="text" class="form-control date_mask" name="birthday" value="{{ Input::old('birthday') }}" placeholder="YYYY-MM-DD" required="" data-bv-notempty-message="The birthday is required and cannot be empty" data-bv-date="true" data-date-format="yyyy-mm-dd" data-bv-date-format="YYYY-MM-DD" data-bv-date-message="The birthday is not valid" data-bv-field="birthday"><i class="form-control-feedback" data-bv-field="birthday" style="display: none;"></i>
 						</div>
 					</div>
 
@@ -147,6 +147,7 @@ Add User Page
 <script>
 	$(document).ready(function(){
 		$('#userRegistrationForm').bootstrapValidator();
+		$('.date_mask').mask('0000-00-00');
 	});
 </script>
 @stop

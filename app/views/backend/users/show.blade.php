@@ -53,58 +53,38 @@ User Information Page
 						<div class="tab-content">
 							<div class="tab-pane fade in active" id="panel-attendance">
 								<h4 class="small-heading more-margin-bottom">My Attendance</h4>
-								<table class="table table-hover table-bordered table-condensed">
-									<thead>
-										<tr>
-											<th colspan="5">Attendance as of <strong>August 2014</strong></th>
-										</tr>
-										<tr>
-											<th>Date</th>
-											<th>Time In</th>
-											<th>Time Out</th>
-											<th>Total Hours</th>
-											<th>Status</th>
-										</tr>
-									</thead>
-									<tbody>
-										<tr>
-											<td>January 21,2014</td>
-											<td>8:09 AM</td>
-											<td>8:12 PM</td>
-											<td>9 Hours</td>
-											<td>Regular</td>
-										</tr>
-										<tr>
-											<td>January 21,2014</td>
-											<td>8:09 AM</td>
-											<td>8:12 PM</td>
-											<td>9 Hours</td>
-											<td>Regular</td>
-										</tr>
-										<tr>
-											<td>January 21,2014</td>
-											<td>8:09 AM</td>
-											<td>8:12 PM</td>
-											<td>9 Hours</td>
-											<td>Regular</td>
-										</tr>
-										<tr>
-											<td>January 21,2014</td>
-											<td>8:09 AM</td>
-											<td>8:12 PM</td>
-											<td>9 Hours</td>
-											<td>Regular</td>
-										</tr>
-										<tr>
-											<td>January 21,2014</td>
-											<td>8:09 AM</td>
-											<td>8:12 PM</td>
-											<td>9 Hours</td>
-											<td>Regular</td>
-										</tr>
-									</tbody>
-								</table>
-								<a href="" class="btn btn-success pull-right">Print Attendance</a>
+								@if(count($listOfAttendances) > 0)
+									<table class="table table-hover table-striped">
+										<thead>
+											<tr>
+												<th>Time In</th>
+												<th>Time Out</th>
+												<th>Total Hours</th>
+												<th>Status</th>
+											</tr>
+										</thead>
+										<tbody>
+											@foreach($listOfAttendances as $attendance)
+											<tr>
+												<td>{{ $attendance['time_in'] }}</td>
+												<td>{{ $attendance['time_out'] }}</td>
+												<td>{{ $attendance['total_hours'] }}</td>
+												<td>{{ $attendance['status']  }}</td>
+											</tr>
+											@endforeach
+										</tbody>
+									</table>
+
+									<div class="row">
+										<div class="col-md-12 text-center">
+											{{ $listOfAttendances->links() }}
+										</div>
+									</div>
+								@else
+									<div class="alert alert-info square fade in alert-dismissable" style="margin-top:10px;">
+									  <strong>Information!</strong> You don't have any attendance records in the system.
+									</div>
+								@endif
 							</div>
 							<div class="tab-pane fade" id="panel-profile">
 								<h4 class="small-heading more-margin-bottom">Profile Information</h4>
@@ -174,14 +154,6 @@ User Information Page
 										<label class="col-sm-3 control-label">Username</label>
 										<div class="col-sm-9">
 										  <p class="form-control-static">{{ $user['username'] }}</p>
-										</div>
-									</div><!-- /.form-group -->
-									<div class="form-group">
-										<label class="col-sm-3 control-label">Password</label>
-										<div class="col-sm-9">
-										  <p class="form-control-static">
-										  	<a href="" class="btn btn-xs btn-danger"><i class="fa fa-repeat"></i>Reset Password</a>
-										  </p>
 										</div>
 									</div><!-- /.form-group -->
 								</form>
