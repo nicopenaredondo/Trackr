@@ -39,7 +39,8 @@ class EloquentAttendancesRepository extends EloquentBaseRepository implements In
 		if (is_null($range)) {
 			# para makita ko din yung login ko ngayong araw. kaya endOfDay instead of startOfDay HiHiHi
 			$startDay = Carbon::now()->endOfDay();
-			return $this->attendance->where('time_in', '<=', $startDay);
+			return $this->attendance->where('time_in', '<=', $startDay)
+															->where('user_id', $userId);
 		}
 	}
 
