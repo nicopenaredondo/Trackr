@@ -85,8 +85,7 @@
 						Hi, <strong>{{ $navbarUser }}</strong>
 					  </a>
 					  <ul class="dropdown-menu square primary margin-list-rounded with-triangle">
-						<li><a href="#fakelink">Account setting</a></li>
-						<li><a href="#fakelink">Change password</a></li>
+						<li><a href="{{ URL::route('app.change-password') }}">Change password</a></li>
 						<li class="divider"></li>
 						<li><a href="{{ URL::route('app.auth.logout') }}">Log out</a></li>
 					  </ul>
@@ -94,16 +93,6 @@
 				</ul>
 				<!-- End user session nav -->
 
-				<!-- Begin Collapse menu nav -->
-				<div class="collapse navbar-collapse" id="main-fixed-nav">
-					<!-- Begin nav search form -->
-					<form class="navbar-form navbar-left" role="search">
-						<div class="form-group">
-							<input type="text" class="form-control" placeholder="Search User...">
-						</div>
-					</form>
-				</div><!-- /.navbar-collapse -->
-				<!-- End Collapse menu nav -->
 			</div><!-- /.top-nav-content -->
 		</div><!-- /.top-navbar-inner -->
 	</div><!-- /.top-navbar -->
