@@ -8,7 +8,7 @@ function getMenuByGroup($group_id)
 		$menu = [
 			[
 				'name' 	=> 'Dashboard',
-				'machine_name' => 'dashboard',
+				'machine_name' => '',
 				'url'  	=> URL::route('app.dashboard'),
 				'icon'	=> 'fa-home icon-sidebar'
 			],
@@ -48,12 +48,6 @@ function getMenuByGroup($group_id)
 				'url'  	=> URL::route('jobs.index'),
 				'icon'	=> 'fa-user icon-sidebar'
 			],
-			[
-				'name' 	=> 'Settings',
-				'machine_name' => 'settings',
-				'url'  	=> URL::route('attendances.index'),
-				'icon'	=> 'fa-cogs icon-sidebar'
-			]
 
 		];
 
@@ -62,7 +56,7 @@ function getMenuByGroup($group_id)
 		$menu = [
 			[
 				'name' 	=> 'Dashboard',
-				'machine_name' => 'dashboard',
+				'machine_name' => '',
 				'url'  	=> URL::route('app.dashboard'),
 				'icon'	=> 'fa-home icon-sidebar'
 			],
@@ -91,7 +85,7 @@ function getMenuByGroup($group_id)
 		$menu = [
 			[
 				'name' 	=> 'Dashboard',
-				'machine_name' => 'dashboard',
+				'machine_name' => '',
 				'url'  	=> URL::route('app.dashboard'),
 				'icon'	=> 'fa-home icon-sidebar'
 			],
@@ -120,15 +114,9 @@ function getMenuByGroup($group_id)
 		$menu = [
 			[
 				'name' 	=> 'Dashboard',
-				'machine_name' => 'dashboard',
+				'machine_name' => '',
 				'url'  	=> URL::route('app.dashboard'),
 				'icon'	=> 'fa-home icon-sidebar'
-			],
-			[
-				'name' 	=> 'Projects',
-				'machine_name' => 'projects',
-				'url'  	=> URL::route('projects.index'),
-				'icon'	=> 'fa-list icon-sidebar'
 			],
 			[
 				'name' 	=> 'Announcements',
@@ -147,5 +135,86 @@ function getMenuByGroup($group_id)
 	}
 
 	return $menu;
+
+}
+
+function getPermissionByGroup($group_id)
+{
+	$permission = [];
+	if ($group_id == 1) {
+		# code...
+		$permission = [
+			[
+				'permission_name' 		=> 'users',
+				'permission_actions ' => ['add','edit','delete']
+			],
+			[
+				'permission_name' 		=> 'projects',
+				'permission_actions ' => ['add','edit','delete']
+			],
+			[
+				'permission_name' 		=> 'announcements',
+				'permission_actions ' => ['add','edit','delete']
+			],
+			[
+				'permission_name' 		=> 'attendances',
+				'permission_actions ' => ['add','edit','delete']
+			],
+			[
+				'permission_name' 		=> 'departments',
+				'permission_actions ' => ['add','edit','delete']
+			],
+			[
+				'permission_name' 		=> 'jobs',
+				'permission_actions ' => ['add','edit','delete']
+			]
+		];
+	}elseif ($group_id == 2) {
+		# code...
+		$permission = [
+			[
+				'permission_name' 		=> 'projects',
+				'permission_actions ' => ['add','edit','delete']
+			],
+			[
+				'permission_name' 		=> 'announcements',
+				'permission_actions ' => ['add','edit','delete']
+			],
+			[
+				'permission_name' 		=> 'attendances',
+				'permission_actions ' => ['add','edit','delete']
+			]
+		];
+	}elseif ($group_id == 3) {
+		# code...
+		$permission = [
+			[
+				'permission_name' 		=> 'projects',
+				'permission_actions ' => []
+			],
+			[
+				'permission_name' 		=> 'announcements',
+				'permission_actions ' => []
+			],
+			[
+				'permission_name' 		=> 'attendances',
+				'permission_actions ' => []
+			]
+		];
+	}elseif ($group_id == 4) {
+		# code...
+		$permission = [
+			[
+				'permission_name' 		=> 'announcements',
+				'permission_actions ' => []
+			],
+			[
+				'permission_name' 		=> 'attendances',
+				'permission_actions ' => []
+			]
+		];
+	}
+
+	return $permission;
 
 }
