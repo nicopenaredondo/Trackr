@@ -3,6 +3,8 @@
 //repository
 use Trackr\Repository\Users\InterfaceUsersRepository as UserRepository;
 use Trackr\Repository\Departments\InterfaceDepartmentsRepository as DepartmentRepository;
+use Trackr\Repository\Attendances\InterfaceAttendancesRepository as AttendanceRepository;
+
 //services
 use Trackr\Services\Validation\UsersValidator as UserValidator;
 
@@ -24,17 +26,30 @@ class UsersController extends BaseController
 	protected $department;
 
 	/**
+	 * Attendance Repository
+	 *
+	 * @param  \Trackr\Repository\Attendances\InterfaceAttendancesRepository
+	 */
+	protected $attendance;
+
+	/**
 	 * User Validation Services
 	 *
 	 * @param  \Trackr\Services\Validation\UsersValidator
 	 */
 	protected $validator;
 
-	public function __construct(UserRepository $user, DepartmentRepository $department, UserValidator $validator)
+	public function __construct(
+		UserRepository $user,
+		DepartmentRepository $department,
+		AttendanceRepository $attendance,
+		UserValidator $validator)
 	{
 		$this->user 			= $user;
 		$this->department = $department;
+		$this->attendance = $attendance;
 		$this->validator 	= $validator;
+		$this->beforeFilter('check-access');
 	}
 
 	/**
@@ -46,9 +61,18 @@ class UsersController extends BaseController
 	public function index()
 	{
 		//
-		$listOfUsers = $this->user->make(['userProfile.job'])->paginate(12);
-		return View::make('backend.users.index')
-							->with('listOfUsers', $listOfUsers);
+		$listOfAdministrator 	= $this->user->getUsersByGroupId(1);
+		$listOfExecutive 			= $this->user->getUsersByGroupId(2);
+		$listOfEmployee 			= $this->user->getUsersByGroupId(3);
+		$listOfOjtIntern 			= $this->user->getUsersByGroupId(4);
+
+		$data = [
+			'listOfAdministrator',
+			'listOfExecutive',
+			'listOfEmployee',
+			'listOfOjtIntern'
+		];
+		return View::make('backend.users.index', compact($data));
 	}
 
 	/**
@@ -102,11 +126,15 @@ class UsersController extends BaseController
 	public function show($id)
 	{
 		//
-		$user = $this->user->find($id);
-		$userProfile = $user->userProfile;
+		$user 							= $this->user->find($id);
+		$userProfile 				= $user->userProfile;
+		$listOfAttendances 	= $this->attendance->getAttendanceHistory($id)
+													 								 ->orderBy('created_at','DESC')
+												  								 ->paginate(15);
 		return View::make('backend.users.show')
 							->with('user', $user)
-							->with('userProfile', $userProfile);
+							->with('userProfile', $userProfile)
+							->with('listOfAttendances', $listOfAttendances);
 	}
 
 	/**
@@ -174,6 +202,19 @@ class UsersController extends BaseController
 		}
 			Session::flash('error', 'Failed to delete user "<strong>'. $userProfile['first_name'] .' '.$userProfile['last_name'].'</strong>"');
 			return Redirect::route('users.index');
+	}
+
+	public function getResetPassword($id)
+	{
+		$rawPassword = Str::random(6);
+		$user = User::find($id);
+		$user->password = $rawPassword;
+		$user->hadResetPassword = 1;
+		if ($user->save()) {
+			# code..
+			return Redirect::route('users.edit',$id)
+								    ->with('success', 'Your new password is "<strong>'. $rawPassword .'</strong>"');
+		}
 	}
 
 }
