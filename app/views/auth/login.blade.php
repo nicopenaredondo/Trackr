@@ -67,7 +67,6 @@
 					<button type="submit" class="btn btn-primary btn-lg btn-perspective btn-block">LOGIN</button>
 				</div>
 			{{ Form::close() }}
-			<p class="text-center"><strong><a href="forgot-password.html">Forgot your password?</a></strong></p>
 		</div><!-- /.login-wrapper -->
 		<!--
 		===========================================================
