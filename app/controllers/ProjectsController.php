@@ -40,6 +40,7 @@ class ProjectsController extends BaseController
 		$this->project 		= $project;
 		$this->department = $department;
 		$this->validator 	= $validator;
+		//$this->beforeFilter('check-access');
 	}
 
 
@@ -66,7 +67,7 @@ class ProjectsController extends BaseController
 	public function create()
 	{
 		//
-		$listOfDepartments = $this->department->make(['jobs.userProfile'])->get();
+		$listOfDepartments = $this->department->make(['jobs.userProfile'])->get()->toArray();
 		return View::make('backend.projects.create')
 							->with('listOfDepartments', $listOfDepartments);
 	}
