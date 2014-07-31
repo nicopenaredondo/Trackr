@@ -7,22 +7,26 @@ class UsersTableSeeder extends Seeder {
 
 		$userData = [
 			'group_id' => 1,
-			'username' => 'nicopenaredondo',
-			'password' => Hash::make('niconico')
+			'username' => 'admin',
+			'password' => Hash::make('password'),
+			'created_at' => date('Y-m-d h:i:s'),
+			'updated_at' => date('Y-m-d h:i:s')
 		];
 		$userId = DB::table('users')->insertGetId($userData);
 
 		$userProfileData = [
 			'user_id' 		=> $userId,
 			'job_id'  		=> 1,
-			'first_name'  => 'Nico',
-			'last_name'   => 'Penaredondo',
+			'first_name'  => 'Administrator',
+			'last_name'   => 'User',
 			'birthday' 		=> '1993-06-05',
-			'email' 			=> 'nico.penaredondo@gmail.com',
-			'address'     => '#4 Pluto St. Sto Nino Phase 2 Meycauayan City Bulacan',
-			'phone_number' => '09264746458',
-			'emergency_contact_number' 	=> '09264746458',
-			'emergency_contact_name' 		=> 'Liza Penaredondo'
+			'email' 			=> 'admin@gmail.com',
+			'address'     => 'Cyberspace',
+			'phone_number' => '123456789',
+			'emergency_contact_number' 	=> '123456789',
+			'emergency_contact_name' 		=> 'Administrator',
+			'created_at' => date('Y-m-d h:i:s'),
+			'updated_at' => date('Y-m-d h:i:s')
 		];
 
 		DB::table('user_profile')->insert($userProfileData);
