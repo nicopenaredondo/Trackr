@@ -13,7 +13,7 @@ class AnnouncementsController extends BaseController
 	 *
 	 * @param  \Trackr\Repository\Announcements\InterfaceAnnouncementsRepository
 	 */
-	protected $Announcement;
+	protected $announcement;
 
 	/**
 	 * Announcement Validation Services
