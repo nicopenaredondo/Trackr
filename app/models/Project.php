@@ -24,6 +24,7 @@ class Project extends Eloquent {
 		'project_name',
 		'project_contact_person',
 		'project_contact_number',
+		'project_status',
 		'email_address',
 		'date_initiated',
 		'date_ended',
@@ -33,6 +34,7 @@ class Project extends Eloquent {
 	{
 		return $this->belongsToMany('UserProfile', 'project_user', 'project_id', 'user_id');
 	}
+
 
 
 }
