@@ -37,7 +37,7 @@ class AttendancesController extends BaseController
 	public function index()
 	{
 		//
-		if(Auth::user()->group_id == 1) {
+		if(Auth::user()->group_id == 1 || Auth::user()->group_id == 2) {
 			$today = date('F j, Y', strtotime(date('Y-m-d')));
 			$listOfAttendances = $this->attendance->getAttendanceToday()
 			                                      ->paginate(15);
@@ -45,7 +45,9 @@ class AttendancesController extends BaseController
 								->with('listOfAttendances', $listOfAttendances)
 								->with('dateToday', $today);
 		}else{
-			$listOfAttendances = $this->attendance->getAttendanceHistory(Auth::user()->user_id)
+			$range['from'] = Carbon::now()->startOfDay()->subWeek();
+			$range['to']   = Carbon::now()->endOfDay();
+			$listOfAttendances = $this->attendance->getAttendanceHistory(Auth::user()->user_id, $range)
 																						->orderBy('created_at','DESC')
 																						->paginate(15);
 			$isLogin   	= $this->attendance->isLogin(Auth::user()->user_id);
@@ -80,7 +82,7 @@ class AttendancesController extends BaseController
 		if($this->attendance->isLogin(Auth::user()->user_id)){
 
 			DB::beginTransaction();
-			if($this->attendance->updateAttendance(Auth::user()->user_id)){
+			if($this->attendance->updateAttendance(Auth::user()->user_id, Input::all())){
 				DB::commit();
 				Session::flash('success', 'You have successfully logged out');
 				return Redirect::route('attendances.index');
@@ -174,4 +176,31 @@ class AttendancesController extends BaseController
 		//
 	}
 
+	/**
+	 * Displays the attendance report of a user
+	 * GET /attendances/attendance-report
+	 *
+	 * @return Response
+	 */
+	public function attendanceReport()
+	{
+		//wala eh namimiss ko eh, siguro kung may attendance yung mga araw na namimiss ko yung bruhang yun
+		//perfect attendance ako #LandiNowCodeLater
+		$data = [];
+		if (Input::has('from') == true && Input::has('to') == true) {
+			$range['from'] = Input::get('from');
+			$range['to']   = Input::get('to');
+		}else{
+			$range['from'] = Carbon::now()->startOfDay()->subWeek();
+			$range['to']   = Carbon::now()->endOfDay();
+		}
+
+		$listOfAttendances = $this->attendance->getAttendanceHistory(Auth::user()->user_id, $range)
+																				  ->orderBy('created_at','DESC')
+																				  ->get();
+		$accumulatedHours  = $this->attendance->getAccumulatedHours(Auth::user()->user_id, $range);
+		$data = ['listOfAttendances', 'accumulatedHours'];
+		return View::make('backend.attendances.attendance-report', compact($data));
+
+	}
 }
