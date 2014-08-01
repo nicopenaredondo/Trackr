@@ -13,7 +13,7 @@ function getMenuByGroup($group_id)
 				'icon'	=> 'fa-home icon-sidebar'
 			],
 			[
-				'name' 	=> 'Users',
+				'name' 	=> 'Members',
 				'machine_name' => 'users',
 				'url'  	=> URL::route('users.index'),
 				'icon'	=> 'fa-users icon-sidebar'
