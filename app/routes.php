@@ -37,6 +37,12 @@ Route::group(['before' =>'auth'],function(){
 	Route::resource('announcements','AnnouncementsController');
 	Route::resource('departments','DepartmentsController');
 	Route::resource('jobs','JobsController');
+
+	Route::get('attendances/attendance-report',[
+		'as' 		=> 'attendances.attendance-report',
+		'uses'	=> 'AttendancesController@attendanceReport'
+	]);
+
 	Route::resource('attendances','AttendancesController');
 
 	Route::get('change-password',[
@@ -53,4 +59,5 @@ Route::group(['before' =>'auth'],function(){
 		'as' 		=> 'users.reset-password',
 		'uses'	=> 'UsersController@getResetPassword'
 	]);
+
 });
