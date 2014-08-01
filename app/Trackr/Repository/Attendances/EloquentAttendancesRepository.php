@@ -34,14 +34,25 @@ class EloquentAttendancesRepository extends EloquentBaseRepository implements In
 		return $this->attendance->whereBetween('time_in',[$startDay, $endDay]);
 	}
 
-	public function getAttendanceHistory($userId, $range = NULL)
+	public function getAttendanceHistory($userId, $range)
 	{
-		if (is_null($range)) {
-			# para makita ko din yung login ko ngayong araw. kaya endOfDay instead of startOfDay HiHiHi
-			$startDay = Carbon::now()->endOfDay();
-			return $this->attendance->where('time_in', '<=', $startDay)
-															->where('user_id', $userId);
+		return $this->attendance->whereBetween('time_in', [$range['from'], $range['to']])
+														->where('user_id', $userId);
+	}
+
+	public function getAccumulatedHours($userId,$range)
+	{
+		$listOfAttendance = $this->attendance->select('time_in', 'time_out')
+		                                     ->whereBetween('time_in', [$range['from'], $range['to']])
+														             ->where('user_id', $userId)
+														             ->get();
+
+		$accumulatedHours = 0;
+		foreach($listOfAttendance as $attendance)
+		{
+			$accumulatedHours += $attendance['total_hours'];
 		}
+		return $accumulatedHours;
 	}
 
 	public function isLogin($userId){
@@ -73,7 +84,7 @@ class EloquentAttendancesRepository extends EloquentBaseRepository implements In
 		return $this->attendance->create($data);
 	}
 
-	public function updateAttendance($userId)
+	public function updateAttendance($userId, $data)
 	{
 		$startDay	= Carbon::now()->startOfDay();
 		$endDay   = Carbon::now()->endOfDay();
@@ -83,6 +94,7 @@ class EloquentAttendancesRepository extends EloquentBaseRepository implements In
 														           ->toArray();
 		$attendance = $this->attendance->find($attendanceData['attendance_id']);
 		$attendance->time_out = date('Y-m-d H:i:s');
+		$attendance->remarks  = $data['remarks'];
 		return $attendance->save();
 	}
 
