@@ -27,7 +27,7 @@ class Attendance extends Eloquent {
 	 * The fields that are allowed for mass assignment
 	 * @var array
 	 */
-	protected $fillable = ['user_id', 'time_in', 'time_out'];
+	protected $fillable = ['user_id', 'time_in', 'time_out', 'remarks'];
 
 	public function users()
 	{
@@ -37,15 +37,22 @@ class Attendance extends Eloquent {
 	public function getTotalHoursAttribute($value)
 	{
 		if(!is_null($this->time_out)){
+
+			$inYear	 		= date('Y', strtotime($this->time_in));
+			$inMonth  	= date('m', strtotime($this->time_in));
+			$inDays  		= date('d', strtotime($this->time_in));
 			$inHour 	 	= date('H', strtotime($this->time_in));
 			$inMinute  	= date('i', strtotime($this->time_in));
 			$inSeconds 	= date('s', strtotime($this->time_in));
-			$inDate 		= \Carbon\Carbon::createFromTime($inHour, $inMinute, $inSeconds);
+			$inDate 		= \Carbon\Carbon::create($inYear, $inMonth, $inDays, $inHour, $inMinute, $inSeconds);
 
+			$outYear	 	= date('Y', strtotime($this->time_out));
+			$outMonth  	= date('m', strtotime($this->time_out));
+			$outDays  	= date('d', strtotime($this->time_out));
 			$outHour 	 	= date('H', strtotime($this->time_out));
 			$outMinute 	= date('i', strtotime($this->time_out));
 			$outSeconds	= date('s', strtotime($this->time_out));
-			$outDate 		= \Carbon\Carbon::createFromTime($outHour, $outMinute, $outSeconds);
+			$outDate 		= \Carbon\Carbon::create($outYear, $outMonth, $outDays, $outHour, $outMinute, $outSeconds);
 
 			return $inDate->diffInHours($outDate);
 		}else{
@@ -68,15 +75,21 @@ class Attendance extends Eloquent {
 
 	public function getStatusAttribute($value)
 	{
+		$inYear	 		= date('Y', strtotime($this->time_in));
+		$inMonth  	= date('m', strtotime($this->time_in));
+		$inDays  		= date('d', strtotime($this->time_in));
 		$inHour 	 	= date('H', strtotime($this->time_in));
 		$inMinute  	= date('i', strtotime($this->time_in));
 		$inSeconds 	= date('s', strtotime($this->time_in));
-		$inDate = \Carbon\Carbon::createFromTime($inHour, $inMinute, $inSeconds);
+		$inDate 		= \Carbon\Carbon::create($inYear, $inMonth, $inDays, $inHour, $inMinute, $inSeconds);
 
+		$outYear	 	= date('Y', strtotime($this->time_out));
+		$outMonth  	= date('m', strtotime($this->time_out));
+		$outDays  	= date('d', strtotime($this->time_out));
 		$outHour 	 	= date('H', strtotime($this->time_out));
 		$outMinute 	= date('i', strtotime($this->time_out));
 		$outSeconds	= date('s', strtotime($this->time_out));
-		$outDate 		= \Carbon\Carbon::createFromTime($outHour, $outMinute, $outSeconds);
+		$outDate 		= \Carbon\Carbon::create($outYear, $outMonth, $outDays, $outHour, $outMinute, $outSeconds);
 
 		$dateToday 	= date('Y-m-d', strtotime(\Carbon\Carbon::today()));
 		$dateTimeIn = date('Y-m-d', strtotime($this->time_in));
@@ -96,4 +109,5 @@ class Attendance extends Eloquent {
 			return 'Undertime';
 		}
 	}
+
 }
