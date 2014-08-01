@@ -1,0 +1,42 @@
+0. Dashboard DONE
+0.1 Enhanced the UI
+
+1. Add User Page DONE
+1.1 Add Mask Input to the birthdate, removed the datepicker
+
+2. Show/Edit User page
+2.1 Code the reset password feature
+2.2 code the print attendance feature
+
+3. Add Project Page DONE
+3.1 Add Mask Input to the date initiated and ended ,removed the datepicker
+
+4. Show Project Page
+4.1 Code the task list in the activities page
+4.2 Debug the delete button. It is not working DONE
+
+5. Attendances
+5.1 Code the export to excel feature
+5.2 Add a search feature on the attendance
+
+
+Account Types and Permission
+
+1. Administrator - All
+
+2. Executive
+ 2.1 Projects - All Permissions
+ 2.2 Announcement - All Permissions
+ 2.3 Attendances  - All Permissions
+
+3. Employee
+ 3.1 Projects - View Only
+ 3.2 Announcement - View Only
+ 3.3 Attendance - Add & View Only
+ 3.4 Task - All Permission
+
+4. OJT/Intern
+ 4.1 Announcement - View Only
+ 4.2 Attendance - Add & View Only
+ 4.3 Task       - All Permission
+
