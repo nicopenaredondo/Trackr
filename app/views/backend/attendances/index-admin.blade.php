@@ -55,7 +55,7 @@ List of Attendance Page
 	</div>
 	@else
 		<div class="alert alert-info square fade in alert-dismissable" style="margin-top:10px;">
-		  <strong>Information!</strong> You don't have any attendance records in the system.
+		  <strong>Information!</strong> The system doesn't have any attendance records
 		</div>
 	@endif
 @stop

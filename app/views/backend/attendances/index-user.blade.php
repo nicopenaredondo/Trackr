@@ -16,40 +16,78 @@ List of Attendance Page
 
 	@include('notification')
 
-	@if($isLogin == true)
-		@if($isLogout == false)
-		{{ Form::open(['route' => 'attendances.store']) }}
-		<button type="submit"  class="btn btn-lg btn-primary">Logout</button>
-		@endif
-	@else
-		{{ Form::open(['route' => 'attendances.store']) }}
-		<button type="submit"  class="btn btn-lg btn-primary">Login</button>
-	@endif
 
-	{{ Form::close() }}
 	@if(count($listOfAttendances) > 0)
-	<div class="row" style="margin-top:10px;">
+	<div class="row">
+		<div class="col-md-12 pull-right">
+			<p class="pull-right">
+				<a href="{{ URL::route('attendances.attendance-report') }}" class="btn btn-success"><i class="fa fa-eye"></i> View Attendance Report</a>
+			</p>
+		</div>
+	</div>
+	<div class="row">
 		<div class="col-md-12">
-			<table class="table table-hover table-striped">
-				<thead>
-					<tr>
-						<th>Time In</th>
-						<th>Time Out</th>
-						<th>Total Hours</th>
-						<th>Status</th>
-					</tr>
-				</thead>
-				<tbody>
-					@foreach($listOfAttendances as $attendance)
-					<tr>
-						<td>{{ $attendance['time_in'] }}</td>
-						<td>{{ $attendance['time_out'] }}</td>
-						<td>{{ $attendance['total_hours'] }}</td>
-						<td>{{ $attendance['status']  }}</td>
-					</tr>
-					@endforeach
-				</tbody>
-			</table>
+			<ul class="timeline">
+
+				<!-- BEGIN CENTERING LINE -->
+				<li class="centering-line"></li>
+				<!-- END CENTERING LINE -->
+
+				<li class="item-timeline post-form-timeline">
+					<div class="buletan"></div>
+					<div class="inner-content">
+						@if($isLogin == true)
+							@if($isLogout == false)
+								{{ Form::open(['route' => 'attendances.store']) }}
+								<p>
+								<textarea name="remarks" class="form-control" style="height: 75px;" placeholder="Write something..."></textarea>
+								</p>
+								<p class="text-right">
+									<button type="submit" class="btn btn-primary btn-sm">Logout</button>
+								</p>
+							@else
+							<div class="alert alert-info square fade in alert-dismissable" style="margin-top:10px;">
+							  <strong>Information!</strong> You already have an attendance for this day.
+							</div>
+							@endif
+						@else
+							{{ Form::open(['route' => 'attendances.store']) }}
+							<p class="text-center">
+								<button type="submit"  class="btn btn-lg btn-primary">Login</button>
+							</p>
+						@endif
+						{{ Form::close() }}
+					</div>
+				</li>
+
+				@foreach($listOfAttendances as $attendance)
+				<!-- BEGIN ITEM TIMELINE -->
+				<li class="item-timeline">
+					<div class="buletan"></div>
+					<div class="inner-content">
+						<!-- BEGIN HEADING TIMELINE -->
+						<div class="heading-timeline">
+							<h1 style="font-size:45px"><i class="fa fa-calendar avatar"></i></h1>
+							<div class="user-timeline-info">
+								<p>
+									{{ $attendance['time_in'].' to '. (is_null($attendance['time_out']) ? 'Present' : $attendance['time_out']) }}
+									<small>Total Hours : {{ $attendance['total_hours'] }} </small>
+									{{ $attendance['first_name'].' '.$attendance['last_name'] }}
+								</p>
+
+							</div><!-- /.user-timeline-info -->
+						</div><!-- /.heading-timeline -->
+						<!-- END HEADING TIMELINE -->
+						<p>
+							{{ $attendance['remarks'] }}
+						</p>
+
+						<!-- END FOOTER TIMELINE -->
+					</div><!-- /.inner-content -->
+				</li>
+				<!-- END ITEM TIMELINE -->
+				@endforeach
+			</ul>
 		</div>
 	</div>
 
@@ -59,8 +97,24 @@ List of Attendance Page
 		</div>
 	</div>
 	@else
-		<div class="alert alert-info square fade in alert-dismissable" style="margin-top:10px;">
-		  <strong>Information!</strong> You don't have any attendance records in the system.
+	<div class="row">
+		<div class="col-md-12">
+			<ul class="timeline">
+				<!-- BEGIN CENTERING LINE -->
+				<li class="centering-line"></li>
+				<!-- END CENTERING LINE -->
+
+				<li class="item-timeline highlight">
+					<div class="buletan"></div>
+					<div class="inner-content">
+						{{ Form::open(['route' => 'attendances.store']) }}
+							<button type="submit"  class="btn btn-block btn-primary">Login</button>
+						{{ Form::close() }}
+					</div>
+				</li>
+
+			</ul>
 		</div>
+	</div>
 	@endif
 @stop
