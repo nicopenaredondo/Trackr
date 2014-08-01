@@ -481,6 +481,7 @@ $(document).ready(function(){
 		var now = new Date(nowTemp.getFullYear(), nowTemp.getMonth(), nowTemp.getDate(), 0, 0, 0, 0);
 
 		var checkin = $('#datepicker1').datepicker({
+			format: 'yyyy-mm-dd',
 		  onRender: function(date) {
 			return date.valueOf() < now.valueOf() ? 'disabled' : '';
 		  }
@@ -494,6 +495,7 @@ $(document).ready(function(){
 		  $('#datepicker2')[0].focus();
 		}).data('datepicker');
 		var checkout = $('#datepicker2').datepicker({
+			format: 'yyyy-mm-dd',
 		  onRender: function(date) {
 			return date.valueOf() <= checkin.date.valueOf() ? 'disabled' : '';
 		  }
