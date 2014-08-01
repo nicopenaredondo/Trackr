@@ -67,7 +67,7 @@ class BaseController extends Controller
 	public function getDashboard()
 	{
 
-		if(Auth::user()->group_id == 1) {
+		if(Auth::user()->group_id == 1 || Auth::user()->group_id == 2) {
 			$countOfAnnouncement 	= $this->announcement->count();
 			$countOfProject 			= $this->project->count();
 			$countOfDepartment 		= $this->department->count();
