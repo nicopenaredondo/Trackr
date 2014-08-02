@@ -29,11 +29,11 @@ List of Attendance Page
 						{{ Form::open(['method' => 'GET','route' => 'attendances.attendance-report']) }}
 						<div class="form-group">
 							<label>Choose start date</label>
-							<input type="text" name="from" value="{{ Input::get('from') }}" class="form-control" id="datepicker1" placeholder="Enter Start Date">
+							<input type="text" name="from" value="{{ Input::get('from') }}" class="form-control datepicker"  placeholder="Enter Start Date">
 						</div>
 						<div class="form-group">
 							<label>Choose end date</label>
-							<input type="text" name="to" value="{{ Input::get('to') }}" class="form-control" id="datepicker2" placeholder="Enter End Date">
+							<input type="text" name="to" value="{{ Input::get('to') }}" class="form-control datepicker" placeholder="Enter End Date">
 						</div>
 						<div class="form-group">
 							<button type="submit" class="btn btn-success btn-block">
@@ -45,12 +45,15 @@ List of Attendance Page
 					<div class="col-md-8">
 						@if(count($listOfAttendances) > 0)
 						<div class="table-responsive">
+							<a href="" class="btn btn-xs btn-success pull-right">
+								<i class="fa fa-print"></i> Print Attendance
+							</a>
 							<table class="table table-th-block table-primary table-hovered">
 								<thead>
 									<tr>
 										<th width="20%">Date</th>
 										<th width="60%">Remarks</th>
-										<th width="20%">Total Hours</th>
+										<th width="20%" class="text-center">Total Hours</th>
 									</tr>
 								</thead>
 								<tbody>
