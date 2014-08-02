@@ -38,12 +38,17 @@ class AttendancesController extends BaseController
 	{
 		//
 		if(Auth::user()->group_id == 1 || Auth::user()->group_id == 2) {
-			$today = date('F j, Y', strtotime(date('Y-m-d')));
-			$listOfAttendances = $this->attendance->getAttendanceToday()
-			                                      ->paginate(15);
+			if(Input::has('query')){
+				$date = date('F j, Y', strtotime(Input::get('query')));
+				$listOfAttendances = $this->attendance->getAttendance(Input::get('query'))
+				                                      ->paginate(15);
+			}else{
+				$date = date('F j, Y', strtotime(date('Y-m-d')));
+				$listOfAttendances = $this->attendance->getAttendance()->paginate(15);
+			}
 			return View::make('backend.attendances.index-admin')
 								->with('listOfAttendances', $listOfAttendances)
-								->with('dateToday', $today);
+								->with('date', $date);
 		}else{
 			$range['from'] = Carbon::now()->startOfDay()->subWeek();
 			$range['to']   = Carbon::now()->endOfDay();
@@ -188,8 +193,8 @@ class AttendancesController extends BaseController
 		//perfect attendance ako #LandiNowCodeLater
 		$data = [];
 		if (Input::has('from') == true && Input::has('to') == true) {
-			$range['from'] = Input::get('from');
-			$range['to']   = Input::get('to');
+			$range['from'] = Carbon::createFromFormat('Y-m-d', Input::get('from'))->startOfDay();
+			$range['to']   = Carbon::createFromFormat('Y-m-d', Input::get('to'))->endOfDay();
 		}else{
 			$range['from'] = Carbon::now()->startOfDay()->subWeek();
 			$range['to']   = Carbon::now()->endOfDay();
