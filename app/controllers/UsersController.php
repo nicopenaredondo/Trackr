@@ -126,11 +126,19 @@ class UsersController extends BaseController
 	public function show($id)
 	{
 		//
+
+		if (Input::has('from') == true && Input::has('to') == true) {
+			$range['from'] = Carbon::createFromFormat('Y-m-d', Input::get('from'))->startOfDay();
+			$range['to']   = Carbon::createFromFormat('Y-m-d', Input::get('to'))->endOfDay();
+		}else{
+			$range['from'] = Carbon::now()->startOfDay()->subWeek();
+			$range['to']   = Carbon::now()->endOfDay();
+		}
+		$listOfAttendances 	= $this->attendance->getAttendanceHistory($id, $range)
+																					 ->orderBy('created_at','DESC')
+																				   ->paginate(15);
 		$user 							= $this->user->find($id);
 		$userProfile 				= $user->userProfile;
-		$listOfAttendances 	= $this->attendance->getAttendanceHistory($id)
-													 								 ->orderBy('created_at','DESC')
-												  								 ->paginate(15);
 		return View::make('backend.users.show')
 							->with('user', $user)
 							->with('userProfile', $userProfile)
