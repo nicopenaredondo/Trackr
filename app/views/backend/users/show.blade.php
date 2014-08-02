@@ -52,39 +52,61 @@ User Information Page
 					<div class="panel-body">
 						<div class="tab-content">
 							<div class="tab-pane fade in active" id="panel-attendance">
-								<h4 class="small-heading more-margin-bottom">My Attendance</h4>
-								@if(count($listOfAttendances) > 0)
-									<table class="table table-hover table-striped">
-										<thead>
-											<tr>
-												<th>Time In</th>
-												<th>Time Out</th>
-												<th>Total Hours</th>
-												<th>Status</th>
-											</tr>
-										</thead>
-										<tbody>
-											@foreach($listOfAttendances as $attendance)
-											<tr>
-												<td>{{ $attendance['time_in'] }}</td>
-												<td>{{ $attendance['time_out'] }}</td>
-												<td>{{ $attendance['total_hours'] }}</td>
-												<td>{{ $attendance['status']  }}</td>
-											</tr>
-											@endforeach
-										</tbody>
-									</table>
+								<div class="row">
+									<div class="col-md-4">
+										<h4 class="small-heading more-margin-bottom">Search Attendance</h4>
+										{{ Form::open(['method' => 'GET','route' => ['users.show', $user['user_id']]]) }}
+											<div class="form-group">
+												<label>Choose start date</label>
+												<input type="text" name="from" value="{{ Input::get('from') }}" class="form-control datepicker"  placeholder="Enter Start Date">
+											</div>
+											<div class="form-group">
+												<label>Choose end date</label>
+												<input type="text" name="to" value="{{ Input::get('to') }}" class="form-control datepicker" placeholder="Enter End Date">
+											</div>
+											<div class="form-group">
+												<button type="submit" class="btn btn-success btn-block">
+													Submit
+												</button>
+											</div>
+										{{ Form::close() }}
+									</div>
+									<div class="col-md-8">
+										<h4 class="small-heading more-margin-bottom">My Attendance</h4>
+										@if(count($listOfAttendances) > 0)
+											<table class="table table-hover table-striped">
+												<thead>
+													<tr>
+														<th>Time In</th>
+														<th>Time Out</th>
+														<th>Total Hours</th>
+														<th>Status</th>
+													</tr>
+												</thead>
+												<tbody>
+													@foreach($listOfAttendances as $attendance)
+													<tr>
+														<td>{{ $attendance['time_in'] }}</td>
+														<td>{{ $attendance['time_out'] }}</td>
+														<td>{{ $attendance['total_hours'] }}</td>
+														<td>{{ $attendance['status']  }}</td>
+													</tr>
+													@endforeach
+												</tbody>
+											</table>
 
-									<div class="row">
-										<div class="col-md-12 text-center">
-											{{ $listOfAttendances->links() }}
-										</div>
+											<div class="row">
+												<div class="col-md-12 text-center">
+													{{ $listOfAttendances->links() }}
+												</div>
+											</div>
+										@else
+											<div class="alert alert-info square fade in alert-dismissable" style="margin-top:10px;">
+											  <strong>Information!</strong> You don't have any attendance records in the system.
+											</div>
+										@endif
 									</div>
-								@else
-									<div class="alert alert-info square fade in alert-dismissable" style="margin-top:10px;">
-									  <strong>Information!</strong> You don't have any attendance records in the system.
-									</div>
-								@endif
+								</div>
 							</div>
 							<div class="tab-pane fade" id="panel-profile">
 								<h4 class="small-heading more-margin-bottom">Profile Information</h4>
