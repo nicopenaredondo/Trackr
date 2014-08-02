@@ -3,7 +3,7 @@
 interface InterfaceAttendancesRepository
 {
 	public function whereUserId($userId);
-	public function getAttendanceToday();
+	public function getAttendance($date = NULL);
 	public function getAttendanceHistory($userId, $range);
 	public function getAccumulatedHours($userId,$range);
 	public function isLogin($userId);

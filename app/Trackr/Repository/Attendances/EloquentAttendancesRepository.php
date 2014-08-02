@@ -27,11 +27,17 @@ class EloquentAttendancesRepository extends EloquentBaseRepository implements In
 		return $this->attendance->whereUserId($userId);
 	}
 
-	public function getAttendanceToday()
+	public function getAttendance($date = NULL)
 	{
-		$startDay = Carbon::now()->startOfDay();
-		$endDay   = Carbon::now()->endOfDay();
-		return $this->attendance->whereBetween('time_in',[$startDay, $endDay]);
+		if (is_null($date)) {
+			$startDay = Carbon::now()->startOfDay();
+			$endDay   = Carbon::now()->endOfDay();
+			return $this->attendance->whereBetween('time_in',[$startDay, $endDay]);
+		}else{
+			$startDay = Carbon::createFromFormat('Y-m-d', $date)->startOfDay();
+			$endDay   = Carbon::createFromFormat('Y-m-d', $date)->endOfDay();
+			return $this->attendance->whereBetween('time_in',[$startDay, $endDay]);
+		}
 	}
 
 	public function getAttendanceHistory($userId, $range)
@@ -42,7 +48,7 @@ class EloquentAttendancesRepository extends EloquentBaseRepository implements In
 
 	public function getAccumulatedHours($userId,$range)
 	{
-		$listOfAttendance = $this->attendance->select('time_in', 'time_out')
+			$listOfAttendance = $this->attendance->select('time_in', 'time_out')
 		                                     ->whereBetween('time_in', [$range['from'], $range['to']])
 														             ->where('user_id', $userId)
 														             ->get();
