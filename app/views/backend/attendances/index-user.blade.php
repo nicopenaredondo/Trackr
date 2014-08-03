@@ -40,7 +40,7 @@ List of Attendance Page
 							@if($isLogout == false)
 								{{ Form::open(['route' => 'attendances.store']) }}
 								<p>
-								<textarea name="remarks" class="form-control" style="height: 75px;" placeholder="Write something..."></textarea>
+								<textarea name="remarks" id="remarksEditor" class="form-control" placeholder="Write something..."></textarea>
 								</p>
 								<p class="text-right">
 									<button type="submit" class="btn btn-primary btn-sm">Logout</button>
@@ -117,4 +117,21 @@ List of Attendance Page
 		</div>
 	</div>
 	@endif
+@stop
+
+@section('footer_script')
+	<script>
+		$(document).ready(function(){
+			$('#remarksEditor').summernote({
+				height  : 100,
+				toolbar : [
+					['style', ['bold', 'italic', 'underline', 'clear']],
+					['font', ['strike']],
+					['fontsize', ['fontsize']],
+					['color', ['color']],
+					['para', ['ul', 'ol', 'paragraph']]
+				]
+			});
+		});
+	</script>
 @stop
