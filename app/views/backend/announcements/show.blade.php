@@ -10,7 +10,7 @@ Announcement Details Page
 	<!-- Begin breadcrumb -->
 	<ol class="breadcrumb default square rsaquo sm">
 		<li><a href="{{ URL::route('app.dashboard') }}"><i class="fa fa-home"></i></a></li>
-		<li><a href="{{ URL::route('departments.index') }}">List of Announcement</a></li>
+		<li><a href="{{ URL::route('announcements.index') }}">List of Announcement</a></li>
 		<li class="active">{{ $announcement['announcement_title'] }} </li>
 	</ol>
 	<!-- End breadcrumb -->

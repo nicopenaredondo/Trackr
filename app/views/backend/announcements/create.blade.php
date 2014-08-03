@@ -3,10 +3,6 @@
 Add Announcement Page
 @stop
 
-@section('header_script')
-{{ HTML::script('//cdn.ckeditor.com/4.4.1/basic/ckeditor.js') }}
-@stop
-
 @section('content')
 	<!-- Begin page heading -->
 	<h1 class="page-heading">Add Announcement Page <small>Displays a form to add a new announcement</small></h1>
@@ -37,7 +33,7 @@ Add Announcement Page
 					<div class="form-group has-feedback">
 						<label class="col-lg-3 control-label">Announcement Body </label>
 						<div class="col-lg-9">
-							<textarea class="form-control" id="announcement_body" name="announcement_body" style="resize:none;" placeholder="Enter the announcement body.." required="" rows="3" data-bv-notempty-message="The announcement body is required and cannot be empty" data-bv-field="announcement_body"data-bv-stringlength="true" data-bv-stringlength-max="1000" data-bv-stringlength-message="The announcement_body can only contain 1000 characters">{{ Input::old('announcement_body') }}</textarea>
+							<textarea class="form-control" id="announcementEditor" name="announcement_body" style="resize:none;" placeholder="Enter the announcement body.." required="" rows="3" data-bv-notempty-message="The announcement body is required and cannot be empty" data-bv-field="announcement_body"data-bv-stringlength="true" data-bv-stringlength-max="1000" data-bv-stringlength-message="The announcement_body can only contain 1000 characters">{{ Input::old('announcement_body') }}</textarea>
 							{{ $errors->first('announcement_body','<p class="text-danger">:message</p>') }}
 						</div>
 					</div>
@@ -56,9 +52,18 @@ Add Announcement Page
 
 @section('footer_script')
 <script>
-	CKEDITOR.replace( 'announcement_body' );
 	$(document).ready(function(){
 		$('#userRegistrationForm').bootstrapValidator();
+		$('#announcementEditor').summernote({
+				height  : 300,
+				toolbar : [
+					['style', ['bold', 'italic', 'underline', 'clear']],
+					['font', ['strike']],
+					['fontsize', ['fontsize']],
+					['color', ['color']],
+					['para', ['ul', 'ol', 'paragraph']]
+				]
+			});
 	});
 </script>
 @stop
