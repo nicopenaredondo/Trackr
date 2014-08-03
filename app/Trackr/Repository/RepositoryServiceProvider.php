@@ -6,6 +6,7 @@ use Job;
 use Project;
 use Attendance;
 use Announcement;
+use Task;
 
 use Trackr\Repository\Users\EloquentUsersRepository;
 use Trackr\Repository\Departments\EloquentDepartmentsRepository;
@@ -13,8 +14,9 @@ use Trackr\Repository\Jobs\EloquentJobsRepository;
 use Trackr\Repository\Projects\EloquentProjectsRepository;
 use Trackr\Repository\Attendances\EloquentAttendancesRepository;
 use Trackr\Repository\Announcements\EloquentAnnouncementsRepository;
-use Illuminate\Support\ServiceProvider;
+use Trackr\Repository\Tasks\EloquentTasksRepository;
 
+use Illuminate\Support\ServiceProvider;
 
 class RepositoryServiceProvider extends ServiceProvider
 {
@@ -70,6 +72,14 @@ class RepositoryServiceProvider extends ServiceProvider
 		function(){
 				return new EloquentAnnouncementsRepository(new Announcement);
 		});
+
+		//Task Repository
+		$app->bind(
+			'Trackr\Repository\Tasks\InterfaceTasksRepository',
+		function(){
+				return new EloquentTasksRepository(new Task);
+		});
+
 
 	}
 }

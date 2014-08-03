@@ -43,7 +43,19 @@ Route::group(['before' =>'auth'],function(){
 		'uses'	=> 'AttendancesController@attendanceReport'
 	]);
 
-	Route::resource('attendances','AttendancesController');
+	Route::resource('attendances', 'AttendancesController');
+
+	Route::post('tasks/remove',[
+		'as' 		=> 'tasks.remove',
+		'uses'	=> 'TasksController@remove'
+	]);
+
+	Route::post('tasks/change-status',[
+		'as' 		=> 'tasks.change-status',
+		'uses'	=> 'TasksController@changeStatus'
+	]);
+
+	Route::resource('tasks', 'TasksController');
 
 	Route::get('change-password',[
 		'as' 		=> 'app.change-password',
