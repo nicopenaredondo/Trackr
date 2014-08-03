@@ -107,6 +107,12 @@ function getMenuByGroup($group_id)
 				'url'  	=> URL::route('attendances.index'),
 				'icon'	=> 'fa-calendar icon-sidebar'
 			],
+			[
+				'name' 	=> 'Tasks',
+				'machine_name' => 'tasks',
+				'url'  	=> URL::route('tasks.index'),
+				'icon'	=> 'fa-tasks icon-sidebar'
+			],
 		];
 
 	}elseif ($group_id == 4) {
@@ -129,6 +135,12 @@ function getMenuByGroup($group_id)
 				'machine_name' => 'attendances',
 				'url'  	=> URL::route('attendances.index'),
 				'icon'	=> 'fa-calendar icon-sidebar'
+			],
+			[
+				'name' 	=> 'Tasks',
+				'machine_name' => 'tasks',
+				'url'  	=> URL::route('tasks.index'),
+				'icon'	=> 'fa-tasks icon-sidebar'
 			],
 		];
 
