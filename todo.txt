@@ -1,11 +1,11 @@
 Features
-1. Task Module for OJT/Intern and Employee
+1. Task Module for OJT/Intern and Employee (DONE)
 2. Attendance Report for OJT/Intern and Employee (DONE)
 3. Search User (Executive and Administrator)
-4. Search Attendance
+4. Search Attendance (DONE)
 5. Develop the user role management
 6. Login Throttle feature
-7. WYSIWYG for remarks in attendance
+7. WYSIWYG for remarks in attendance (DONE)
 
 Enhancement
 1. Dashboard of Executive, OJT/Intern and Employee
@@ -14,3 +14,8 @@ Enhancement
 
 Revisions
 1. Changed the "users" term into "members" (DONE)
+
+TODO TOMORROW MORNING
+1. Calendar for OJT/Intern and employee (DASHBOARD)
+2. Search user for admin and executive
+3. user role (permission) management
