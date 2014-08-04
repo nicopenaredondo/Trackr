@@ -40,7 +40,7 @@ List of Announcements Page
 					<tr>
 						<td>{{ $announcement['announcement_id'] }}</td>
 						<td>{{ $announcement['announcement_title'] }}</td>
-						<td>{{ Str::limit($announcement['announcement_body'],100) }}</td>
+						<td>{{ Str::limit(strip_tags($announcement['announcement_body']),100) }}</td>
 						<td><a href="{{ URL::route('announcements.show', $announcement['announcement_id']) }}" class="btn btn-xs btn-success"><i class="fa fa-eye"></i> View Announcement</a></td>
 					</tr>
 					@endforeach
