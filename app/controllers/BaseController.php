@@ -5,6 +5,7 @@ use Trackr\Repository\Announcements\InterfaceAnnouncementsRepository as Announce
 use Trackr\Repository\Projects\InterfaceProjectsRepository as ProjectRepository;
 use Trackr\Repository\Departments\InterfaceDepartmentsRepository as DepartmentRepository;
 use Trackr\Repository\Users\InterfaceUsersRepository as UserRepository;
+use Trackr\Repository\Tasks\InterfaceTasksRepository as TaskRepository;
 
 class BaseController extends Controller
 {
@@ -37,18 +38,27 @@ class BaseController extends Controller
 	 */
 	protected $user;
 
+	/**
+	 * Task Repository
+	 *
+	 * @param  \Trackr\Repository\Users\InterfaceTaskRepository
+	 */
+	protected $task;
+
 
 	public function __construct(
 		AnnouncementRepository $announcement,
 		ProjectRepository $project,
 		DepartmentRepository $department,
-		UserRepository $user
+		UserRepository $user,
+		TaskRepository $task
 	)
 	{
 		$this->announcement = $announcement;
 		$this->project  		= $project;
 		$this->department  	= $department;
 		$this->user 				= $user;
+		$this->task 				= $task;
 	}
 
 	/**
@@ -85,8 +95,9 @@ class BaseController extends Controller
 			return View::make('backend.dashboard.index-admin',compact($data));
 		}else{
 
-			$listOfAnnouncement 	= $this->announcement->getRecentRecord(5);
-			$data = ['listOfAnnouncement'];
+			$listOfTasks 	= $this->task->getCalendarTasks(Auth::user()->user_id);
+			$listOfTodayTasks = $this->task->today(Auth::user()->user_id)->get();
+			$data = ['listOfTasks', 'listOfTodayTasks'];
 			return View::make('backend.dashboard.index-user',compact($data));
 
 		}

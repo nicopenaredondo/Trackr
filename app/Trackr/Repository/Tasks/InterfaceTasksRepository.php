@@ -6,4 +6,5 @@ interface InterfaceTasksRepository
 	public function today($userId);
 	public function upcoming($userId);
 	public function updateStatus($id);
+	public function getCalendarTasks($userId);
 }

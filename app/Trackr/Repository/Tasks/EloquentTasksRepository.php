@@ -44,4 +44,22 @@ class EloquentTasksRepository extends EloquentBaseRepository implements Interfac
 		($task['isDone']) ? $task->isDone = 0 : $task->isDone = 1;
 		return $task->save();
 	}
+
+	public function getCalendarTasks($userId)
+	{
+		$date = Carbon::now()->startOfDay();
+		$calendar = [];
+		$listOfTasks = $this->task->where('task_due_date', '>=', $date)
+		                          ->where('user_id', $userId)
+		                          ->get();
+		foreach($listOfTasks as $tasks){
+			$data = [
+				'title'	=> $tasks['task_name'],
+				'start'	=> date('Y-m-d', strtotime($tasks['task_due_date']))
+			];
+			array_push($calendar, $data);
+		}
+
+		return json_encode($calendar);
+	}
 }
