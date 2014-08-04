@@ -35,20 +35,23 @@ List of Tasks Page
 							<div class="col-md-6">
 								<div class="the-box">
 									<div class="media user-card-sm">
-									  <a class="pull-left" href="#fakelink">
-
-									  </a>
-									  <div class="media-body">
-										<h4 class="media-heading">{{ $task['task_name'] }}</h4>
-										<p class="text-info">{{ $task['task_due_date_human'] }}</p>
+									  <div class="row">
+									  	<div class="col-md-12">
+									  		<div class="media-body text-center">
+													<h4 class="media-heading">{{ $task['task_name'] }}</h4>
+													<p class="text-info">{{ $task['task_due_date_human'] }}</p>
+											  </div>
+									  	</div>
 									  </div>
-									  <div class="right-button">
-										<div class="btn-group">
-											<a href="" data-task-id="{{$task['task_id']}}" class="btn btn-primary task-done"><i class="fa fa-check"></i></a>
-											<a href="{{ URL::route('tasks.edit', $task['task_id']) }}" class="btn btn-warning"><i class="fa fa-pencil"></i></a>
-											<a href="" data-task-id="{{$task['task_id']}}" class="btn btn-danger task-remove"><i class="fa fa-times"></i></a>
-										</div>
-									  </div><!-- /.right-button -->
+									  <div class="row">
+									  	<div class="col-md-12 text-center">
+									  		<div class="btn-group">
+													<a href="" data-task-id="{{$task['task_id']}}" class="btn btn-primary task-done"><i class="fa fa-check"></i></a>
+													<a href="{{ URL::route('tasks.edit', $task['task_id']) }}" class="btn btn-warning"><i class="fa fa-pencil"></i></a>
+													<a href="" data-task-id="{{$task['task_id']}}" class="btn btn-danger task-remove"><i class="fa fa-times"></i></a>
+												</div>
+									  	</div>
+									  </div>
 									</div>
 								</div>
 							</div>
