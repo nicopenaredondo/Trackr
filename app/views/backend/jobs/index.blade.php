@@ -15,6 +15,7 @@ List of Jobs Page
 	<!-- End breadcrumb -->
 
 	@include('notification')
+	@if(in_array('add', $permittedAction))
 	<div class="row" style="margin-top:10px;">
 		<div class="col-md-12">
 			<a href="{{ URL::route('jobs.create') }}" class="btn btn-info">
@@ -23,6 +24,7 @@ List of Jobs Page
 			</a>
 		</div>
 	</div>
+	@endif
 	@if(count($listOfJobs) > 0)
 	<div class="row" style="margin-top:10px;">
 		<div class="col-md-12">

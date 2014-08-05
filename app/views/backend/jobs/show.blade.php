@@ -19,13 +19,17 @@ Job Details Page
 	<div class="row">
 		<div class="col-md-12">
 			{{ Form::open(['route' => ['jobs.destroy', $job['job_id']], 'method' => 'delete']) }}
+			@if(in_array('edit', $permittedAction))
 			<a href="{{ URL::route('jobs.edit', $job['job_id']) }}" class="btn btn-info">
 				<i class="fa fa-pencil"></i>
 				Update Information
 			</a>
+			@endif
+			@if(in_array('delete', $permittedAction))
 			<button type="submit" class="btn btn-danger">
 		 		<i class="fa fa-trash-o"> Delete Job</i>
 			</button>
+			@endif
 		{{ Form::close() }}
 		</div>
 	</div>

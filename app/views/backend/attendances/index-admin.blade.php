@@ -62,7 +62,11 @@ List of Attendance Page
 									<td>{{ ($attendance['time_out']) }}</td>
 									<td>{{ $attendance['total_hours'] }}</td>
 									<td>{{ $attendance['status']  }}</td>
-									<td><a href="{{ URL::route('attendances.edit', $attendance['attendance_id']) }}" class="btn btn-xs btn-success"><i class="fa fa-eye"></i> Edit Attendance</a></td>
+									<td>
+										@if(in_array('edit', $permittedAction))
+											<a href="{{ URL::route('attendances.edit', $attendance['attendance_id']) }}" class="btn btn-xs btn-success"><i class="fa fa-eye"></i> Edit Attendance</a>
+										@endif
+									</td>
 								</tr>
 								@endforeach
 							</tbody>

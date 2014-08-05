@@ -19,13 +19,17 @@ Department Details Page
 	<div class="row">
 		<div class="col-md-12">
 			{{ Form::open(['route' => ['departments.destroy', $department['department_id']], 'method' => 'delete']) }}
+			@if(in_array('edit', $permittedAction))
 			<a href="{{ URL::route('departments.edit', $department['department_id']) }}" class="btn btn-info">
 				<i class="fa fa-pencil"></i>
 				Update Information
 			</a>
+			@endif
+			@if(in_array('delete', $permittedAction))
 			<button type="submit" class="btn btn-danger">
 		 		<i class="fa fa-trash-o"> Delete Department</i>
 			</button>
+			@endif
 		{{ Form::close() }}
 		</div>
 	</div>

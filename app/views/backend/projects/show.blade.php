@@ -18,13 +18,17 @@ Project Details Page
 	<div class="row">
 		<div class="col-md-12">
 			{{ Form::open(['route' => ['projects.destroy', $project['project_id']], 'method' => 'delete']) }}
+			@if(in_array('edit', $permittedAction))
 			<a href="{{ URL::route('projects.edit', $project['project_id']) }}" class="btn btn-info">
 				<i class="fa fa-pencil"></i>
 				Update Information
 			</a>
+			@endif
+			@if(in_array('delete', $permittedAction))
 			<button type="submit" class="btn btn-danger">
 		 		<i class="fa fa-trash-o"> Delete Project</i>
 			</button>
+			@endif
 		{{ Form::close() }}
 		</div>
 	</div>
@@ -87,11 +91,12 @@ Project Details Page
 						  </li>
 						@endforeach
 					</ul>
-					<a href="{{ URL::route('projects.edit', $project['project_id']) }}" class="btn btn-primary btn-block"><i class="fa fa-plus"></i> Add User</a>
+					@if(in_array('edit', $permittedAction))
+						<a href="{{ URL::route('projects.edit', $project['project_id']) }}" class="btn btn-primary btn-block"><i class="fa fa-plus"></i> Add User</a>
+					@endif
 					@else
 					<div class="alert alert-info square fade in alert-dismissable" style="margin-top:10px;">
-					  <strong>Information!</strong> This project doesn't have any assigned users. Would you like to assign
-					  <a href="{{ URL::route('projects.edit', $project['project_id']) }}" class="alert-link">now </a>?
+					  <strong>Information!</strong> This project doesn't have any assigned users.
 					</div>
 					@endif
 				  </div><!-- /.panel-body -->

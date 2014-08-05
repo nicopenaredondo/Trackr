@@ -25,7 +25,7 @@ Edit Attendance Page
 					<div class="form-group has-feedback">
 						<label class="col-lg-3 control-label">Time In</label>
 						<div class="col-lg-9">
-							<input type="text" class="form-control attendanace_date_mask" name="time_in" value="{{ date('Y-m-d h:i:s', strtotime($attendance['time_in'])) }}" placeholder="0000/00/00 00:00:00" maxlength="19" required="" data-bv-notempty-message="The department name is required and cannot be empty" data-bv-field="time_in" data-bv-stringlength="true" data-bv-stringlength-max="19" data-bv-stringlength-message="The time in date have only 19 characters in capacity"><i class="form-control-feedback" data-bv-field="time_in" style="display: none;"></i>
+							<input type="text" class="form-control attendanace_date_mask" name="time_in" value="{{ date('Y-m-d H:i:s', strtotime($attendance['time_in'])) }}" placeholder="0000/00/00 00:00:00" maxlength="19" required="" data-bv-notempty-message="The department name is required and cannot be empty" data-bv-field="time_in" data-bv-stringlength="true" data-bv-stringlength-max="19" data-bv-stringlength-message="The time in date have only 19 characters in capacity"><i class="form-control-feedback" data-bv-field="time_in" style="display: none;"></i>
 							{{ $errors->first('time_in','<p class="text-danger">:message</p>') }}
 						</div>
 					</div>
@@ -33,7 +33,7 @@ Edit Attendance Page
 					<div class="form-group has-feedback">
 						<label class="col-lg-3 control-label">Time Out</label>
 						<div class="col-lg-9">
-							<input type="text" class="form-control attendanace_date_mask" name="time_out" value="{{ date('Y-m-d h:i:s', strtotime($attendance['time_out'])) }}" placeholder="0000/00/00 00:00:00" maxlength="19" required="" data-bv-notempty-message="The department name is required and cannot be empty" data-bv-field="time_out" data-bv-stringlength="true" data-bv-stringlength-max="19" data-bv-stringlength-message="The time in date have only 19 characters in capacity"><i class="form-control-feedback" data-bv-field="time_out" style="display: none;"></i>
+							<input type="text" class="form-control attendanace_date_mask" name="time_out" value="{{ date('Y-m-d H:i:s', strtotime($attendance['time_out'])) }}" placeholder="0000/00/00 00:00:00" maxlength="19" required="" data-bv-notempty-message="The department name is required and cannot be empty" data-bv-field="time_out" data-bv-stringlength="true" data-bv-stringlength-max="19" data-bv-stringlength-message="The time in date have only 19 characters in capacity"><i class="form-control-feedback" data-bv-field="time_out" style="display: none;"></i>
 							{{ $errors->first('time_out','<p class="text-danger">:message</p>') }}
 						</div>
 					</div>

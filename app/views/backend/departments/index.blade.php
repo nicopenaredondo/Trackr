@@ -15,6 +15,7 @@ List of Departments Page
 	<!-- End breadcrumb -->
 
 	@include('notification')
+	@if(in_array('add', $permittedAction))
 	<div class="row" style="margin-top:10px;">
 		<div class="col-md-12">
 			<a href="{{ URL::route('departments.create') }}" class="btn btn-info">
@@ -23,6 +24,7 @@ List of Departments Page
 			</a>
 		</div>
 	</div>
+	@endif
 	@if(count($listOfDepartments) > 0)
 	<div class="row" style="margin-top:10px;">
 		<div class="col-md-12">
@@ -56,8 +58,7 @@ List of Departments Page
 	</div>
 	@else
 		<div class="alert alert-info square fade in alert-dismissable" style="margin-top:10px;">
-		  <strong>Information!</strong> You don't have any departments in the system. Would you like to create
-		  <a href="{{ URL::route('departments.create') }}" class="alert-link">one </a>?
+		  <strong>Information!</strong> You don't have any departments in the system.
 		</div>
 	@endif
 @stop

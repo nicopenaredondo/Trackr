@@ -28,13 +28,17 @@ User Information Page
 					<p class="text-muted">Work at <label class="text-primary">{{ $userProfile->job->department->department_name }} Department </label></p>
 					{{ Form::open(['route' => ['users.destroy', $user['user_id']], 'method' => 'delete']) }}
 					<p class="right-button">
+						@if(in_array('edit', $permittedAction))
 						<a href="{{ URL::route('users.edit', $userProfile['user_id']) }}" class="btn btn-primary btn-sm">
 							<i class="fa fa-pencil"></i>
 							Edit Profile
 						</a>
+						@endif
+						@if(in_array('delete', $permittedAction))
 						<button type="submit" class="btn btn-danger btn-sm">
 					 		<i class="fa fa-trash-o"> Delete User</i>
 						</button>
+						@endif
 					</p>
 					{{ Form::close() }}
 				</div><!-- /.profile-info -->

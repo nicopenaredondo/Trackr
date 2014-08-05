@@ -15,6 +15,7 @@ List of User Page
 	<!-- End breadcrumb -->
 
 	@include('notification')
+	@if(in_array('add', $permittedAction))
 	<div class="row" style="margin-bottom:10px;">
 		<div class="col-md-12">
 			<a href="{{ URL::route('users.create') }}" class="btn btn-info">
@@ -23,6 +24,8 @@ List of User Page
 			</a>
 		</div>
 	</div>
+	@endif
+	{{ Form::open(['route' => 'users.index', 'method' => 'GET']) }}
 	<div class="row" style="margin-bottom:10px;">
 		<div class="col-md-12">
 			<div class="input-group custom-search-form">
@@ -35,6 +38,7 @@ List of User Page
 		 	</div>
 		</div>
 	</div>
+	{{ Form::close() }}
 	<div class="row">
 		<div class="col-sm-6 col-md-6">
 			<!-- BEGIN TASK LIST -->

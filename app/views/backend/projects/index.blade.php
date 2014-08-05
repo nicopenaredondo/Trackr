@@ -15,6 +15,7 @@ List of Projects Page
 	<!-- End breadcrumb -->
 
 	@include('notification')
+	@if(in_array('add', $permittedAction))
 	<div class="row" style="margin-top:10px;">
 		<div class="col-md-12">
 			<a href="{{ URL::route('projects.create') }}" class="btn btn-info">
@@ -23,6 +24,7 @@ List of Projects Page
 			</a>
 		</div>
 	</div>
+	@endif
 	@if(count($listOfProjects) > 0)
 	<div class="row" style="margin-top:10px;">
 		@foreach($listOfProjects as $project)
@@ -59,8 +61,7 @@ List of Projects Page
 	</div>
 	@else
 		<div class="alert alert-info square fade in alert-dismissable" style="margin-top:10px;">
-		  <strong>Information!</strong> You don't have any projects in the system. Would you like to create
-		  <a href="{{ URL::route('projects.create') }}" class="alert-link">one </a>?
+		  <strong>Information!</strong> You don't have any projects in the system
 		</div>
 	@endif
 @stop
