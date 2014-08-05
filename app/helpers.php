@@ -158,27 +158,27 @@ function getPermissionByGroup($group_id)
 		$permission = [
 			[
 				'permission_name' 		=> 'users',
-				'permission_actions ' => ['add','edit','delete']
+				'permission_actions' => ['add','edit','delete']
 			],
 			[
 				'permission_name' 		=> 'projects',
-				'permission_actions ' => ['add','edit','delete']
+				'permission_actions' => ['add','edit','delete']
 			],
 			[
 				'permission_name' 		=> 'announcements',
-				'permission_actions ' => ['add','edit','delete']
+				'permission_actions' => ['add','edit','delete']
 			],
 			[
 				'permission_name' 		=> 'attendances',
-				'permission_actions ' => ['add','edit','delete']
+				'permission_actions' => ['add','edit','delete']
 			],
 			[
 				'permission_name' 		=> 'departments',
-				'permission_actions ' => ['add','edit','delete']
+				'permission_actions' => ['add','edit','delete']
 			],
 			[
 				'permission_name' 		=> 'jobs',
-				'permission_actions ' => ['add','edit','delete']
+				'permission_actions' => ['add','edit','delete']
 			]
 		];
 	}elseif ($group_id == 2) {
@@ -186,15 +186,15 @@ function getPermissionByGroup($group_id)
 		$permission = [
 			[
 				'permission_name' 		=> 'projects',
-				'permission_actions ' => ['add','edit','delete']
+				'permission_actions' => ['add','edit','delete']
 			],
 			[
 				'permission_name' 		=> 'announcements',
-				'permission_actions ' => ['add','edit','delete']
+				'permission_actions' => ['add','edit','delete']
 			],
 			[
 				'permission_name' 		=> 'attendances',
-				'permission_actions ' => ['add','edit','delete']
+				'permission_actions' => ['add','edit','delete']
 			]
 		];
 	}elseif ($group_id == 3) {
@@ -202,15 +202,15 @@ function getPermissionByGroup($group_id)
 		$permission = [
 			[
 				'permission_name' 		=> 'projects',
-				'permission_actions ' => []
+				'permission_actions' => []
 			],
 			[
 				'permission_name' 		=> 'announcements',
-				'permission_actions ' => []
+				'permission_actions' => []
 			],
 			[
 				'permission_name' 		=> 'attendances',
-				'permission_actions ' => []
+				'permission_actions' => []
 			]
 		];
 	}elseif ($group_id == 4) {
@@ -218,11 +218,11 @@ function getPermissionByGroup($group_id)
 		$permission = [
 			[
 				'permission_name' 		=> 'announcements',
-				'permission_actions ' => []
+				'permission_actions' => []
 			],
 			[
 				'permission_name' 		=> 'attendances',
-				'permission_actions ' => []
+				'permission_actions' => []
 			]
 		];
 	}
