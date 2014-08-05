@@ -96,11 +96,18 @@ Route::filter('csrf', function()
 
 
 Route::filter('check-access', function(){
-	$permissionList = getPermissionByGroup(Auth::user()->group_id);
-	$segmentUrl 		= Request::segment(1);
+ if(Request::segment(1) != ''){
+ 		$permissionList = getPermissionByGroup(Auth::user()->group_id);
+		$segmentUrl 		= Request::segment(1);
 
-	foreach($permissionList as $permission){
-		$permissionNameList[] = $permission['permission_name'];
-	}
-	if(!in_array($segmentUrl, $permissionNameList)) return App::abort(404);
+		foreach($permissionList as $permission){
+			$permissionNameList[] = $permission['permission_name'];
+		}
+		if(!in_array($segmentUrl, $permissionNameList)) return App::abort(404);
+	 }
+
+});
+
+Route::filter('check-access', function(){
+	//
 });
