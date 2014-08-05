@@ -78,9 +78,9 @@ Edit Project Page
 
 					<h3 class="small-title">Assign Users</h3>
 					<hr>
-
+					@foreach(array_chunk($listOfDepartments, 3) as $rowDepartments)
 					<div class="row">
-						@foreach($listOfDepartments as $department)
+						@foreach($rowDepartments as $department)
 						<div class="col-sm-6 col-md-4">
 							<!-- BEGIN TASK LIST -->
 							<div class="panel panel-success panel-no-border task-list-wrap">
@@ -113,6 +113,7 @@ Edit Project Page
 						</div>
 						@endforeach
 					</div>
+					@endforeach
 			</div>
 			<button type="submit" class="btn btn-primary btn-block btn-lg btn-square">Submit Information</button>
 			{{ Form::close() }}

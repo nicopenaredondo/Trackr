@@ -125,7 +125,7 @@ class ProjectsController extends BaseController
 	public function edit($id)
 	{
 		//
-		$listOfDepartments = $this->department->make(['jobs.userProfile'])->get();
+		$listOfDepartments = $this->department->make(['jobs.userProfile'])->get()->toArray();
 		$project = $this->project->find($id);
 		return View::make('backend.projects.edit')
 							->with('project', $project)
