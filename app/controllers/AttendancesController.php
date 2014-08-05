@@ -208,4 +208,22 @@ class AttendancesController extends BaseController
 		return View::make('backend.attendances.attendance-report', compact($data));
 
 	}
+
+	public function printAttendanceReport()
+	{
+		if(Input::has('from') && Input::has('to')){
+			$range['from'] = Carbon::createFromFormat('Y-m-d', Input::get('from'))->startOfDay();
+			$range['to']   = Carbon::createFromFormat('Y-m-d', Input::get('to'))->endOfDay();
+		}else{
+			$range['from'] = Carbon::create(date('Y'), 1, 1)->startOfDay();
+			$range['to']   = Carbon::now()->endOfDay();
+		}
+
+		$listOfAttendances = $this->attendance->getAttendanceHistory(Auth::user()->user_id, $range)
+																				  ->orderBy('created_at','DESC')
+																				  ->get();
+		$accumulatedHours  = $this->attendance->getAccumulatedHours(Auth::user()->user_id, $range);
+		$data = ['listOfAttendances', 'accumulatedHours'];
+		return View::make('backend.attendances.print', compact($data));
+	}
 }

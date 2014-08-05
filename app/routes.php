@@ -43,6 +43,11 @@ Route::group(['before' =>'auth|check-access'],function(){
 		'uses'	=> 'AttendancesController@attendanceReport'
 	]);
 
+	Route::get('attendances/attendance-report/print',[
+		'as' 		=> 'attendances.attendance-report.print',
+		'uses'	=> 'AttendancesController@printAttendanceReport'
+	]);
+
 	Route::resource('attendances', 'AttendancesController');
 
 	Route::post('tasks/remove',[

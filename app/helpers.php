@@ -211,6 +211,10 @@ function getPermissionByGroup($group_id)
 			[
 				'permission_name' 		=> 'attendances',
 				'permission_actions' => []
+			],
+			[
+				'permission_name' 		=> 'tasks',
+				'permission_actions' => ['add', 'edit', 'delete']
 			]
 		];
 	}elseif ($group_id == 4) {
@@ -223,6 +227,10 @@ function getPermissionByGroup($group_id)
 			[
 				'permission_name' 		=> 'attendances',
 				'permission_actions' => []
+			],
+			[
+				'permission_name' 		=> 'tasks',
+				'permission_actions' => ['add', 'edit', 'delete']
 			]
 		];
 	}
