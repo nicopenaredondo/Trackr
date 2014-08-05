@@ -26,7 +26,7 @@ Route::get('logout',[
 	'uses'	=> 'AuthController@getLogout'
 ]);
 
-Route::group(['before' =>'auth'],function(){
+Route::group(['before' =>'auth|check-access'],function(){
 
 	Route::get('/',[
 		'as' 		=> 'app.dashboard',
