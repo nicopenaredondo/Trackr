@@ -40,7 +40,6 @@ class ProjectsController extends BaseController
 		$this->project 		= $project;
 		$this->department = $department;
 		$this->validator 	= $validator;
-		//$this->beforeFilter('check-access');
 	}
 
 
