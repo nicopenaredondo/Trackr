@@ -5,4 +5,5 @@ interface InterfaceUsersRepository
 	public function create($data);
 	public function update($id, $data);
 	public function getUsersByGroupId($groupId);
+	public function searchByName($query);
 }

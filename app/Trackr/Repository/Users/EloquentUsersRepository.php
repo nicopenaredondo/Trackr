@@ -5,6 +5,7 @@ use Illuminate\Database\Eloquent\Model;
 use Trackr\Repository\EloquentBaseRepository;
 use Trackr\Repository\Users\InterfaceUsersRepository;
 
+use DB;
 class EloquentUsersRepository extends EloquentBaseRepository implements InterfaceUsersRepository
 {
 	/**
@@ -54,5 +55,11 @@ class EloquentUsersRepository extends EloquentBaseRepository implements Interfac
 		return $this->user->whereGroupId($groupId)
                  			->with('userProfile')
 		                  ->get();
+	}
+
+	public function searchByName($query)
+	{
+		$listOfUsers = $this->userProfile->where(DB::raw('CONCAT_WS("",`first_name`,`last_name`)'),'LIKE','%'. $query .'%');
+		return $listOfUsers;
 	}
 }

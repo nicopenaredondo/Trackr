@@ -61,18 +61,24 @@ class UsersController extends BaseController
 	public function index()
 	{
 		//
-		$listOfAdministrator 	= $this->user->getUsersByGroupId(1);
-		$listOfExecutive 			= $this->user->getUsersByGroupId(2);
-		$listOfEmployee 			= $this->user->getUsersByGroupId(3);
-		$listOfOjtIntern 			= $this->user->getUsersByGroupId(4);
+		if (Input::has('query')) {
+			# code...
+			$listOfUsers = $this->user->searchByName(Input::get('query'))->get()->toArray();
+			return View::make('backend.users.search', compact('listOfUsers'));
+		}else{
+			$listOfAdministrator 	= $this->user->getUsersByGroupId(1);
+			$listOfExecutive 			= $this->user->getUsersByGroupId(2);
+			$listOfEmployee 			= $this->user->getUsersByGroupId(3);
+			$listOfOjtIntern 			= $this->user->getUsersByGroupId(4);
 
-		$data = [
-			'listOfAdministrator',
-			'listOfExecutive',
-			'listOfEmployee',
-			'listOfOjtIntern'
-		];
-		return View::make('backend.users.index', compact($data));
+			$data = [
+				'listOfAdministrator',
+				'listOfExecutive',
+				'listOfEmployee',
+				'listOfOjtIntern'
+			];
+			return View::make('backend.users.index', compact($data));
+		}
 	}
 
 	/**
