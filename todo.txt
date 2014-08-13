@@ -16,6 +16,8 @@ Revisions
 1. Changed the "users" term into "members" (DONE)
 
 TODO TOMORROW MORNING
-1. Calendar for OJT/Intern and employee (DASHBOARD)
-2. Search user for admin and executive
-3. user role (permission) management
+1. Calendar for OJT/Intern and employee (DASHBOARD) DONE
+2. Search user for admin and executive DONE
+3. user role (permission) management DONE
+4. Login throttle feature
+5. Print feature attendance
