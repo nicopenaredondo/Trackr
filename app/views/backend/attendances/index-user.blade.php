@@ -70,7 +70,7 @@ List of Attendance Page
 							<h1 style="font-size:45px"><i class="fa fa-calendar avatar"></i></h1>
 							<div class="user-timeline-info">
 								<p>
-									{{ $attendance['time_in'].' to '. (is_null($attendance['time_out']) ? 'Present' : $attendance['time_out']) }}
+									{{ $attendance['time_in'].' to '. (is_null($attendance['time_out']) ? $attendance['status'] : $attendance['time_out']) }}
 									<small>Total Hours : {{ $attendance['total_hours'] }} </small>
 									{{ $attendance['first_name'].' '.$attendance['last_name'] }}
 								</p>
