@@ -45,7 +45,7 @@ List of Attendance Page
 					<div class="col-md-8">
 						@if(count($listOfAttendances) > 0)
 						<div class="table-responsive">
-							<a href="" class="btn btn-xs btn-success pull-right">
+							<a href="{{ URL::route('attendances.attendance-report.print') }}" class="btn btn-xs btn-success pull-right">
 								<i class="fa fa-print"></i> Print Attendance
 							</a>
 							<table class="table table-th-block table-primary table-hovered">
