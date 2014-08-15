@@ -29,14 +29,4 @@ class AuthController extends BaseController
 		return Redirect::route('app.auth.login')
 									->with('success', 'You are now logged out.');
 	}
-
-	public function getForgotPassword()
-	{
-
-	}
-
-	public function postForgotPassword()
-	{
-
-	}
 }
