@@ -209,6 +209,11 @@ class AttendancesController extends BaseController
 
 	}
 
+	/**
+	 * Print the attendance report of a user
+	 * GET /attendances/attendance-report/print
+	 * @return Response
+	 */
 	public function printAttendanceReport()
 	{
 		if(Input::has('from') && Input::has('to')){
