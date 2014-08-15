@@ -22,11 +22,6 @@ class EloquentAttendancesRepository extends EloquentBaseRepository implements In
 		$this->attendance = $attendance;
 	}
 
-	public function whereUserId($userId)
-	{
-		return $this->attendance->whereUserId($userId);
-	}
-
 	public function getAttendance($date = NULL)
 	{
 		if (is_null($date)) {
