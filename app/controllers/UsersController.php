@@ -6,7 +6,7 @@ use Trackr\Repository\Departments\InterfaceDepartmentsRepository as DepartmentRe
 use Trackr\Repository\Attendances\InterfaceAttendancesRepository as AttendanceRepository;
 
 //services
-use Trackr\Services\Validation\UsersValidator as UserValidator;
+use Trackr\Services\Users\UserService;
 
 class UsersController extends BaseController
 {
@@ -33,22 +33,23 @@ class UsersController extends BaseController
 	protected $attendance;
 
 	/**
-	 * User Validation Services
+	 * User Service
 	 *
-	 * @param  \Trackr\Services\Validation\UsersValidator
+	 * @param  \Trackr\Service\Users\UserService
 	 */
-	protected $validator;
+	protected $userService;
+
 
 	public function __construct(
 		UserRepository $user,
 		DepartmentRepository $department,
 		AttendanceRepository $attendance,
-		UserValidator $validator)
+		UserService $userService)
 	{
-		$this->user 			= $user;
-		$this->department = $department;
-		$this->attendance = $attendance;
-		$this->validator 	= $validator;
+		$this->user 				= $user;
+		$this->department 	= $department;
+		$this->attendance 	= $attendance;
+		$this->userService 	= $userService;
 		$this->beforeFilter('check-access');
 	}
 
@@ -104,22 +105,14 @@ class UsersController extends BaseController
 	public function store()
 	{
 		//
-		if($this->validator->isValidForCreation(Input::all())){
-			DB::beginTransaction();
-			if($this->user->create(Input::all())){
-				DB::commit();
-				Session::flash('success', 'You have successfully created a new user');
-				return Redirect::route('users.index');
-			}else{
-				DB::rollBack();
-				Session::flash('error', 'Failed to create a new user. Please try again later');
-				return Redirect::route('users.index');
-			}
-		}else{
-			return Redirect::route('users.create')
-			              ->withErrors($this->validator->errors())
-			              ->withInput();
+		if($this->userService->create(Input::all())){
+			Session::flash('success', 'You have successfully created a new user');
+			return Redirect::route('users.index');
 		}
+
+		return Redirect::route('users.create')
+			              ->withErrors($this->userService->errors())
+			              ->withInput();
 	}
 
 	/**
