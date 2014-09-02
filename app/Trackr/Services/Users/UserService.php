@@ -50,10 +50,10 @@ class UserService
 		AttendanceRepository $attendance,
 		UserValidator $validator)
 	{
-		$this->user 			= $user;
+		$this->user       = $user;
 		$this->department = $department;
 		$this->attendance = $attendance;
-		$this->validator 	= $validator;
+		$this->validator  = $validator;
 	}
 
 	public function create($data)
