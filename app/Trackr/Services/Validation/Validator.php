@@ -5,21 +5,21 @@ use Validator as V;
 abstract class Validator
 {
 
-	protected $errors;
+  protected $errors;
 
-	public function check($validator)
-	{
+  public function check($validator)
+  {
 
-		if($validator->fails())
-		{
-			$this->errors = $validator->messages();
-			return false;
-		}
+    if($validator->fails())
+    {
+      $this->errors = $validator->messages();
+      return false;
+    }
 
-		return true;
- 	}
+    return true;
+  }
 
- 	public function isValidForCreation($input)
+  public function isValidForCreation($input)
   {
 
     $validator = V::make($input, static::$insertRules);
@@ -45,15 +45,15 @@ abstract class Validator
   public function isValidForLogin($input)
   {
 
-  	$validator = V::make($input, static::$loginRules);
+    $validator = V::make($input, static::$loginRules);
     return $this->check($validator);
 
   }
 
- 	public function errors()
- 	{
- 		return $this->errors;
- 	}
+  public function errors()
+  {
+    return $this->errors;
+  }
 
 
 }

@@ -9,7 +9,7 @@ use Trackr\Repository\Attendances\InterfaceAttendancesRepository as AttendanceRe
 
 class UserService
 {
-	 /**
+   /**
    * Form Data
    *
    * @var array
@@ -17,53 +17,53 @@ class UserService
   protected $data;
 
   /**
-	 * User Repository
-	 *
-	 * @param  \Trackr\Repository\Users\InterfaceUsersRepository
-	 */
-	protected $user;
+   * User Repository
+   *
+   * @param  \Trackr\Repository\Users\InterfaceUsersRepository
+   */
+  protected $user;
 
-	/**
-	 * Department Repository
-	 *
-	 * @param  \Trackr\Repository\Departments\InterfaceDepartmentsRepository
-	 */
-	protected $department;
+  /**
+   * Department Repository
+   *
+   * @param  \Trackr\Repository\Departments\InterfaceDepartmentsRepository
+   */
+  protected $department;
 
-	/**
-	 * Attendance Repository
-	 *
-	 * @param  \Trackr\Repository\Attendances\InterfaceAttendancesRepository
-	 */
-	protected $attendance;
+  /**
+   * Attendance Repository
+   *
+   * @param  \Trackr\Repository\Attendances\InterfaceAttendancesRepository
+   */
+  protected $attendance;
 
-	/**
-	 * User Validation Services
-	 *
-	 * @param  \Trackr\Services\Validation\UsersValidator
-	 */
-	protected $validator;
+  /**
+   * User Validation Services
+   *
+   * @param  \Trackr\Services\Validation\UsersValidator
+   */
+  protected $validator;
 
-	public function __construct(
-		UserRepository $user,
-		DepartmentRepository $department,
-		AttendanceRepository $attendance,
-		UserValidator $validator)
-	{
-		$this->user       = $user;
-		$this->department = $department;
-		$this->attendance = $attendance;
-		$this->validator  = $validator;
-	}
+  public function __construct(
+    UserRepository $user,
+    DepartmentRepository $department,
+    AttendanceRepository $attendance,
+    UserValidator $validator)
+  {
+    $this->user       = $user;
+    $this->department = $department;
+    $this->attendance = $attendance;
+    $this->validator  = $validator;
+  }
 
-	public function create($data)
-	{
-		if($this->validator->isValidForCreation($data)){
-			return $this->user->create($data);
-		}
-	}
+  public function create($data)
+  {
+    if($this->validator->isValidForCreation($data)){
+      return $this->user->create($data);
+    }
+  }
 
-	public function errors(){
-		return $this->validator->errors();
-	}
+  public function errors(){
+    return $this->validator->errors();
+  }
 }

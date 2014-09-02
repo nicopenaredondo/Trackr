@@ -7,16 +7,16 @@ use Trackr\Repository\Jobs\InterfaceJobsRepository;
 
 class EloquentJobsRepository extends EloquentBaseRepository implements InterfaceJobsRepository
 {
-	/**
-	 * Eloquent model
-	 *
-	 * @var Illuminate\Database\Eloquent\Model
-	 */
-	protected $job;
+  /**
+   * Eloquent model
+   *
+   * @var Illuminate\Database\Eloquent\Model
+   */
+  protected $job;
 
-	public function __construct(Model $job)
-	{
-		parent::__construct($job);
-		$this->job = $job;
-	}
+  public function __construct(Model $job)
+  {
+    parent::__construct($job);
+    $this->job = $job;
+  }
 }

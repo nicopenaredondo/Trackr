@@ -3,9 +3,9 @@
 class LoginValidator extends Validator
 {
 
-	static $loginRules = [
-		'username' => 'required',
-		'password' => 'required'
-	];
+  static $loginRules = [
+    'username' => 'required',
+    'password' => 'required'
+  ];
 
 }

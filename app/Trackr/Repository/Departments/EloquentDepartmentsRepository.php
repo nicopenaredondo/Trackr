@@ -7,16 +7,16 @@ use Trackr\Repository\Departments\InterfaceDepartmentsRepository;
 
 class EloquentDepartmentsRepository extends EloquentBaseRepository implements InterfaceDepartmentsRepository
 {
-	/**
-	 * Eloquent model
-	 *
-	 * @var Illuminate\Database\Eloquent\Model
-	 */
-	protected $department;
+  /**
+   * Eloquent model
+   *
+   * @var Illuminate\Database\Eloquent\Model
+   */
+  protected $department;
 
-	public function __construct(Model $department)
-	{
-		parent::__construct($department);
-		$this->department = $department;
-	}
+  public function __construct(Model $department)
+  {
+    parent::__construct($department);
+    $this->department = $department;
+  }
 }
