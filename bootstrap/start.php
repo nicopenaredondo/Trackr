@@ -26,7 +26,7 @@ $app = new Illuminate\Foundation\Application;
 
 $env = $app->detectEnvironment(array(
 
-	'local' => array('HSLNicoP-PC','your-hostname-here'),
+	'local' => array('HSLNicoP-PC','SAMNLPC0017'),
 
 ));
 
