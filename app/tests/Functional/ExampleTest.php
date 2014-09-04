@@ -1,4 +1,6 @@
-<?php
+<?php namespace Tests\Functional;
+
+use TestCase;
 
 class ExampleTest extends TestCase {
 

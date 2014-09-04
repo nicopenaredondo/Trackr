@@ -1,4 +1,6 @@
-<?php
+<?php namespace Tests\Unit;
+
+use TestCase;
 
 class ExampleTest extends TestCase {
 

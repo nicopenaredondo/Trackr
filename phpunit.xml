@@ -11,8 +11,18 @@
          syntaxCheck="false"
 >
     <testsuites>
+
         <testsuite name="Application Test Suite">
             <directory>./app/tests/</directory>
         </testsuite>
+
+        <testsuite name="Unit Test">
+            <directory>./app/tests/unit/</directory>
+        </testsuite>
+
+        <testsuite name="Functional Test">
+            <directory>./app/tests/functional/</directory>
+        </testsuite>
+
     </testsuites>
 </phpunit>
