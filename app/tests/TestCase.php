@@ -1,7 +1,18 @@
 <?php
+class TestCase extends Illuminate\Foundation\Testing\TestCase
+{
+	/**
+	 * Prepare for testing
+	 */
+	public function setUp()
+	{
+    parent::setUp();
 
-class TestCase extends Illuminate\Foundation\Testing\TestCase {
+    Session::start();
 
+    // Enable filters
+    Route::enableFilters();
+	}
 	/**
 	 * Creates the application.
 	 *
@@ -10,9 +21,7 @@ class TestCase extends Illuminate\Foundation\Testing\TestCase {
 	public function createApplication()
 	{
 		$unitTesting = true;
-
-		$testEnvironment = 'testing';
-
+		$testEnvironment = 'local';
 		return require __DIR__.'/../../bootstrap/start.php';
 	}
 
