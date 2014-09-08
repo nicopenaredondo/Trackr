@@ -182,6 +182,10 @@ if(!function_exists('getPermissionByGroup')){
         [
           'permission_name'     => 'jobs',
           'permission_actions'  => ['add','edit','delete']
+        ],
+        [
+          'permission_name'     => 'change-password',
+          'permission_actions'  => []
         ]
       ];
     }elseif ($group_id == 2) {
@@ -198,6 +202,10 @@ if(!function_exists('getPermissionByGroup')){
         [
           'permission_name'     => 'attendances',
           'permission_actions'  => ['add','edit','delete']
+        ],
+        [
+          'permission_name'     => 'change-password',
+          'permission_actions'  => []
         ]
       ];
     }elseif ($group_id == 3) {
@@ -218,6 +226,10 @@ if(!function_exists('getPermissionByGroup')){
         [
           'permission_name'     => 'tasks',
           'permission_actions'  => ['add', 'edit', 'delete']
+        ],
+        [
+          'permission_name'     => 'change-password',
+          'permission_actions'  => []
         ]
       ];
     }elseif ($group_id == 4) {
@@ -235,8 +247,10 @@ if(!function_exists('getPermissionByGroup')){
           'permission_name'     => 'tasks',
           'permission_actions'  => ['add', 'edit', 'delete']
         ],
+        [
           'permission_name'     => 'change-password',
           'permission_actions'  => []
+        ]
       ];
     }
 
