@@ -7,12 +7,9 @@ class TestCase extends Illuminate\Foundation\Testing\TestCase
 	public function setUp()
 	{
     parent::setUp();
-
-    Session::start();
-
-    // Enable filters
-    Route::enableFilters();
+		$this->prepareForTests();
 	}
+
 	/**
 	 * Creates the application.
 	 *
@@ -23,6 +20,11 @@ class TestCase extends Illuminate\Foundation\Testing\TestCase
 		$unitTesting = true;
 		$testEnvironment = 'local';
 		return require __DIR__.'/../../bootstrap/start.php';
+	}
+
+	private function prepareForTests()
+	{
+		Session::start();
 	}
 
 }
