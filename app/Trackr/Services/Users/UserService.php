@@ -1,7 +1,8 @@
 <?php namespace Trackr\Services\Users;
 
 use App;
-use Trackr\Services\Validation\UsersValidator as UserValidator;
+use DB;
+use Trackr\Services\Users\UserValidator;
 use Trackr\Repository\Users\InterfaceUsersRepository as UserRepository;
 use Trackr\Repository\Departments\InterfaceDepartmentsRepository as DepartmentRepository;
 use Trackr\Repository\Attendances\InterfaceAttendancesRepository as AttendanceRepository;
@@ -58,10 +59,27 @@ class UserService
 
   public function create($data)
   {
+    DB::beginTransaction();
     if($this->validator->isValidForCreation($data)){
       return $this->user->create($data);
     }
+
+    DB::rollBack();
+    return false;
   }
+
+  public function update($id, $data){
+    DB::beginTransaction();
+    if($this->validator->isValidForUpdate($data)){
+      DB::commit();
+      return $this->user->update($id, $data);
+    }
+
+    DB::rollBack();
+    return false;
+  }
+
+
 
   public function errors(){
     return $this->validator->errors();

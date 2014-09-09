@@ -173,22 +173,14 @@ class UsersController extends BaseController
   public function update($id)
   {
     //
-    if($this->validator->isValidForUpdate(Input::all())){
-      DB::beginTransaction();
-      if($this->user->update($id, Input::all())){
-        DB::commit();
-        Session::flash('success', 'You have successfully updated this user');
-        return Redirect::route('users.show', $id);
-      }else{
-        DB::rollBack();
-        Session::flash('error', 'Failed to update this user. Please try again later');
-        return Redirect::route('users.show', $id);
-      }
-    }else{
-      return Redirect::route('users.edit', $id)
-                    ->withErrors($this->validator->errors())
-                    ->withInput();
+    if($this->userService->update($id, Input::all())){
+      Session::flash('success', 'You have successfully updated this user');
+      return Redirect::route('users.show', $id);
     }
+
+    return Redirect::route('users.edit', $id)
+                    ->withErrors($this->userService->errors())
+                    ->withInput();
   }
 
   /**
