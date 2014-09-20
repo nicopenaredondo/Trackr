@@ -6,7 +6,7 @@ use Trackr\Repository\Departments\InterfaceDepartmentsRepository as DepartmentRe
 use Trackr\Repository\Attendances\InterfaceAttendancesRepository as AttendanceRepository;
 
 //services
-use Trackr\Services\Users\UserService;
+use Trackr\Gateway\UserGateway;
 
 class UsersController extends BaseController
 {
@@ -33,23 +33,23 @@ class UsersController extends BaseController
   protected $attendance;
 
   /**
-   * User Service
+   * User Gateway
    *
-   * @param  \Trackr\Service\Users\UserService
+   * @param  \Trackr\Gateway\UserGateway
    */
-  protected $userService;
+  protected $UserGateway;
 
 
   public function __construct(
     UserRepository $user,
     DepartmentRepository $department,
     AttendanceRepository $attendance,
-    UserService $userService)
+    UserGateway $userGateway)
   {
     $this->user         = $user;
     $this->department   = $department;
     $this->attendance   = $attendance;
-    $this->userService  = $userService;
+    $this->userGateway  = $userGateway;
     $this->beforeFilter('check-access');
   }
 
@@ -105,14 +105,15 @@ class UsersController extends BaseController
   public function store()
   {
     //
-    if($this->userService->create(Input::all())){
+    if($this->userGateway->create(Input::all())){
       Session::flash('success', 'You have successfully created a new user');
       return Redirect::route('users.index');
     }
 
     return Redirect::route('users.create')
-                    ->withErrors($this->userService->errors())
-                    ->withInput();
+                  ->with('error', 'Failed to create a new user. This incident will be reported')
+                  ->withErrors($this->userGateway->errors())
+                  ->withInput();
   }
 
   /**
@@ -125,19 +126,13 @@ class UsersController extends BaseController
   public function show($id)
   {
     //
+    $range['from'] = (Input::has('from')) ? Input::get('from') : NULL;
+    $range['to']   = (Input::has('to')) ? Input::get('to') : NULL;
 
-    if (Input::has('from') == true && Input::has('to') == true) {
-      $range['from'] = Carbon::createFromFormat('Y-m-d', Input::get('from'))->startOfDay();
-      $range['to']   = Carbon::createFromFormat('Y-m-d', Input::get('to'))->endOfDay();
-    }else{
-      $range['from'] = Carbon::now()->startOfDay()->subWeek();
-      $range['to']   = Carbon::now()->endOfDay();
-    }
-    $listOfAttendances  = $this->attendance->getAttendanceHistory($id, $range)
-                                           ->orderBy('created_at','DESC')
-                                           ->paginate(15);
     $user               = $this->user->find($id);
     $userProfile        = $user->userProfile;
+    $listOfAttendances  = $this->userGateway->getAttendanceHistory($id, $range);
+
     return View::make('backend.users.show')
               ->with('user', $user)
               ->with('userProfile', $userProfile)
@@ -172,23 +167,15 @@ class UsersController extends BaseController
    */
   public function update($id)
   {
-    //
-    if($this->validator->isValidForUpdate(Input::all())){
-      DB::beginTransaction();
-      if($this->user->update($id, Input::all())){
-        DB::commit();
-        Session::flash('success', 'You have successfully updated this user');
-        return Redirect::route('users.show', $id);
-      }else{
-        DB::rollBack();
-        Session::flash('error', 'Failed to update this user. Please try again later');
-        return Redirect::route('users.show', $id);
-      }
-    }else{
-      return Redirect::route('users.edit', $id)
-                    ->withErrors($this->validator->errors())
-                    ->withInput();
+    if($this->userGateway->update($id, Input::all())){
+      Session::flash('success', 'You have successfully updated this user');
+      return Redirect::route('users.show', $id);
     }
+
+    return Redirect::route('users.edit', $id)
+                  ->with('error', 'Failed to update this user. This incident will be reported')
+                  ->withErrors($this->userGateway->errors())
+                  ->withInput();
   }
 
   /**
@@ -201,9 +188,8 @@ class UsersController extends BaseController
   public function destroy($id)
   {
     //
-    $user = $this->user->find($id);
-    $userProfile = $user->userProfile;
-    if ($this->user->delete($user)) {
+    $userProfile = $this->user->find($id)->userProfile;
+    if ($this->userGateway->delete($id)) {
       Session::flash('success', 'You have successfully deleted "<strong>'. $userProfile['first_name'] .' '.$userProfile['last_name'].'</strong>"');
       return Redirect::route('users.index');
     }
@@ -211,14 +197,16 @@ class UsersController extends BaseController
       return Redirect::route('users.index');
   }
 
+  /**
+   * Reset the password of a specified user
+   * GET /users/{id}/edit/reset-password
+   * @param  int $id
+   * @return Response
+   */
   public function getResetPassword($id)
   {
     $rawPassword = Str::random(6);
-    $user = User::find($id);
-    $user->password = $rawPassword;
-    $user->hadResetPassword = 1;
-    if ($user->save()) {
-      # code..
+    if ($this->userGateway->forgotPassword($id, $rawPassword)) {
       return Redirect::route('users.edit',$id)
                     ->with('success', 'Your new password is "<strong>'. $rawPassword .'</strong>"');
     }
