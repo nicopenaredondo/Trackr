@@ -131,10 +131,7 @@ return array(
 		//Trackr Service Providers
 		'Trackr\Repository\RepositoryServiceProvider',
 		'Trackr\Extension\Validation\ValidationServiceProvider',
-		'Trackr\Services\FormServiceProvider'
-
-
-
+		'Trackr\Gateway\GatewayServiceProvider',
 	),
 
 	/*
