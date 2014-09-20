@@ -169,7 +169,7 @@ class UsersController extends BaseController
   {
 
     //
-    if($this->userService->update($id, Input::all())){
+    if($this->userGateway->update($id, Input::all())){
       Session::flash('success', 'You have successfully updated this user');
       return Redirect::route('users.show', $id);
     }
