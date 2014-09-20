@@ -167,7 +167,9 @@ class UsersController extends BaseController
    */
   public function update($id)
   {
-    if($this->userGateway->update($id, Input::all())){
+
+    //
+    if($this->userService->update($id, Input::all())){
       Session::flash('success', 'You have successfully updated this user');
       return Redirect::route('users.show', $id);
     }
@@ -176,6 +178,7 @@ class UsersController extends BaseController
                   ->with('error', 'Failed to update this user. This incident will be reported')
                   ->withErrors($this->userGateway->errors())
                   ->withInput();
+
   }
 
   /**

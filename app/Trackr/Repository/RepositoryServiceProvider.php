@@ -21,65 +21,65 @@ use Illuminate\Support\ServiceProvider;
 class RepositoryServiceProvider extends ServiceProvider
 {
 
-	/**
-	 * Register the repositories
-	 *
-	 * @return void
-	 */
+  /**
+   * Register the repositories
+   *
+   * @return void
+   */
 
-	public function register()
-	{
-		$app = $this->app;
+  public function register()
+  {
+    $app = $this->app;
 
-		//Users Repository
-		$app->bind(
-			'Trackr\Repository\Users\InterfaceUsersRepository',
-		function(){
-				return new EloquentUsersRepository(new User, new UserProfile);
-		});
+    //Users Repository
+    $app->bind(
+      'Trackr\Repository\Users\InterfaceUsersRepository',
+    function(){
+        return new EloquentUsersRepository(new User, new UserProfile);
+    });
 
-		//Departments Repository
-		$app->bind(
-			'Trackr\Repository\Departments\InterfaceDepartmentsRepository',
-		function(){
-				return new EloquentDepartmentsRepository(new Department);
-		});
+    //Departments Repository
+    $app->bind(
+      'Trackr\Repository\Departments\InterfaceDepartmentsRepository',
+    function(){
+        return new EloquentDepartmentsRepository(new Department);
+    });
 
-		//Jobs Repository
-		$app->bind(
-			'Trackr\Repository\Jobs\InterfaceJobsRepository',
-		function(){
-				return new EloquentJobsRepository(new Job);
-		});
+    //Jobs Repository
+    $app->bind(
+      'Trackr\Repository\Jobs\InterfaceJobsRepository',
+    function(){
+        return new EloquentJobsRepository(new Job);
+    });
 
-		//Projects Repository
-		$app->bind(
-			'Trackr\Repository\Projects\InterfaceProjectsRepository',
-		function(){
-				return new EloquentProjectsRepository(new Project);
-		});
+    //Projects Repository
+    $app->bind(
+      'Trackr\Repository\Projects\InterfaceProjectsRepository',
+    function(){
+        return new EloquentProjectsRepository(new Project);
+    });
 
-		//Attendances Repository
-		$app->bind(
-			'Trackr\Repository\Attendances\InterfaceAttendancesRepository',
-		function(){
-				return new EloquentAttendancesRepository(new Attendance);
-		});
+    //Attendances Repository
+    $app->bind(
+      'Trackr\Repository\Attendances\InterfaceAttendancesRepository',
+    function(){
+        return new EloquentAttendancesRepository(new Attendance);
+    });
 
-		//Announcement Repository
-		$app->bind(
-			'Trackr\Repository\Announcements\InterfaceAnnouncementsRepository',
-		function(){
-				return new EloquentAnnouncementsRepository(new Announcement);
-		});
+    //Announcement Repository
+    $app->bind(
+      'Trackr\Repository\Announcements\InterfaceAnnouncementsRepository',
+    function(){
+        return new EloquentAnnouncementsRepository(new Announcement);
+    });
 
-		//Task Repository
-		$app->bind(
-			'Trackr\Repository\Tasks\InterfaceTasksRepository',
-		function(){
-				return new EloquentTasksRepository(new Task);
-		});
+    //Task Repository
+    $app->bind(
+      'Trackr\Repository\Tasks\InterfaceTasksRepository',
+    function(){
+        return new EloquentTasksRepository(new Task);
+    });
 
 
-	}
+  }
 }
