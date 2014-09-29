@@ -51,7 +51,7 @@
 
 			<!-- Begin Logo brand -->
 			<div class="logo-brand">
-				<a href="index.html"><img src="{{ asset('assets/img/sentir-logo-primary.png') }}" alt="HS logo"></a>
+				<a href="{{ URL::route('app.dashboard')}}"><img src="{{ asset('assets/img/sentir-logo-primary.png') }}" alt="HS logo"></a>
 			</div><!-- /.logo-brand -->
 			<!-- End Logo brand -->
 
