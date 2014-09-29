@@ -6,6 +6,9 @@ use Trackr\Repository\Departments\InterfaceDepartmentsRepository as DepartmentRe
 //services
 use Trackr\Services\Validation\JobsValidator as JobValidator;
 
+//gateway
+use Trackr\Gateway\JobGateway;
+
 class JobsController extends BaseController
 {
 
@@ -30,11 +33,14 @@ class JobsController extends BaseController
    */
   protected $validator;
 
-  public function __construct(JobRepository $job, DepartmentRepository $department, JobValidator $validator)
+  public function __construct(
+    JobRepository $job,
+    DepartmentRepository $department,
+    JobGateway $jobGateway)
   {
-    $this->job        = $job;
+    $this->job = $job;
     $this->department = $department;
-    $this->validator  = $validator;
+    $this->jobGateway = $jobGateway;
   }
 
 
@@ -74,23 +80,15 @@ class JobsController extends BaseController
    */
   public function store()
   {
-    //
-    if($this->validator->isValidForCreation(Input::all())){
-      DB::beginTransaction();
-      if($this->job->create(Input::all())){
-        DB::commit();
-        Session::flash('success', 'You have successfully created a new job');
-        return Redirect::route('jobs.index');
-      }else{
-        DB::rollBack();
-        Session::flash('error', 'Failed to create a new job. Please try again later');
-        return Redirect::route('jobs.index');
-      }
-    }else{
-      return Redirect::route('jobs.create')
-                    ->withErrors($this->validator->errors())
-                    ->withInput();
+    if($this->jobGateway->create(Input::all())){
+      Session::flash('success', 'You have successfully created a new job');
+      return Redirect::route('jobs.index');
     }
+
+    return Redirect::route('users.create')
+                  ->with('error', 'Failed to create a new job. This incident will be reported')
+                  ->withErrors($this->jobGateway->errors())
+                  ->withInput();
   }
 
   /**
@@ -135,22 +133,15 @@ class JobsController extends BaseController
   public function update($id)
   {
     //
-    if($this->validator->isValidForUpdate(Input::all())){
-      DB::beginTransaction();
-      if($this->job->update($id, Input::all())){
-        DB::commit();
-        Session::flash('success', 'You have successfully updated this job');
-        return Redirect::route('jobs.show', $id);
-      }else{
-        DB::rollBack();
-        Session::flash('error', 'Failed to update this job. Please try again later');
-        return Redirect::route('jobs.show', $id);
-      }
-    }else{
-      return Redirect::route('jobs.edit', $id)
-                    ->withErrors($this->validator->errors())
-                    ->withInput();
+    if($this->jobGateway->update($id, Input::all())){
+      Session::flash('success', 'You have successfully updated this job');
+      return Redirect::route('jobs.show', $id);
     }
+
+    return Redirect::route('users.edit',$id)
+                  ->with('error', 'Failed to update this job. This incident will be reported')
+                  ->withErrors($this->jobGateway->errors())
+                  ->withInput();
   }
 
   /**
