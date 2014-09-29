@@ -5,7 +5,7 @@ use Trackr\Repository\Users\InterfaceUsersRepository as UserRepository;
 use Trackr\Repository\Departments\InterfaceDepartmentsRepository as DepartmentRepository;
 use Trackr\Repository\Attendances\InterfaceAttendancesRepository as AttendanceRepository;
 
-//services
+//gateway
 use Trackr\Gateway\UserGateway;
 
 class UsersController extends BaseController
