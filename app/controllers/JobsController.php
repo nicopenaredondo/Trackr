@@ -85,7 +85,7 @@ class JobsController extends BaseController
       return Redirect::route('jobs.index');
     }
 
-    return Redirect::route('users.create')
+    return Redirect::route('jobs.create')
                   ->with('error', 'Failed to create a new job. This incident will be reported')
                   ->withErrors($this->jobGateway->errors())
                   ->withInput();
@@ -138,7 +138,7 @@ class JobsController extends BaseController
       return Redirect::route('jobs.show', $id);
     }
 
-    return Redirect::route('users.edit',$id)
+    return Redirect::route('jobs.edit',$id)
                   ->with('error', 'Failed to update this job. This incident will be reported')
                   ->withErrors($this->jobGateway->errors())
                   ->withInput();
