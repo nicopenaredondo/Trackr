@@ -2,6 +2,8 @@
 
 //repository
 use Trackr\Repository\Announcements\InterfaceAnnouncementsRepository as AnnouncementRepository;
+//gateway
+use Trackr\Gateway\AnnouncementGateway;
 //services
 use Trackr\Services\Validation\AnnouncementsValidator as AnnouncementValidator;
 
@@ -16,16 +18,27 @@ class AnnouncementsController extends BaseController
   protected $announcement;
 
   /**
-   * Announcement Validation Services
+   * Announcement Gateway
+   *
+   * @param  \Trackr\Gateway\AnnouncementGateway;
+   */
+  protected $announcementGateway;
+
+  /**
+   * Announcement Validation Service
    *
    * @param  \Trackr\Services\Validation\AnnouncementsValidator
    */
   protected $validator;
 
-  public function __construct(AnnouncementRepository $announcement, AnnouncementValidator $validator)
+  public function __construct(
+    AnnouncementRepository $announcement,
+    AnnouncementGateway $announcementGateway,
+    AnnouncementValidator $validator)
   {
-    $this->announcement = $announcement;
-    $this->validator  = $validator;
+    $this->announcement         = $announcement;
+    $this->announcementGateway  = $announcementGateway;
+    $this->validator            = $validator;
   }
 
   /**
@@ -63,22 +76,15 @@ class AnnouncementsController extends BaseController
   public function store()
   {
     //
-    if($this->validator->isValidForCreation(Input::all())){
-      DB::beginTransaction();
-      if($this->announcement->create(Input::all())){
-        DB::commit();
-        Session::flash('success', 'You have successfully created a new announcement');
-        return Redirect::route('announcements.index');
-      }else{
-        DB::rollBack();
-        Session::flash('error', 'Failed to create a new announcement. Please try again later');
-        return Redirect::route('announcements.index');
-      }
-    }else{
-      return Redirect::route('announcements.create')
-                    ->withErrors($this->validator->errors())
-                    ->withInput();
+   if($this->announcementGateway->create(Input::all())){
+      Session::flash('success', 'You have successfully created a new announcement');
+      return Redirect::route('announcements.index');
     }
+
+    return Redirect::route('announcements.create')
+                  ->with('error', 'Failed to create a new announcement. This incident will be reported')
+                  ->withErrors($this->announcementGateway->errors())
+                  ->withInput();
   }
 
   /**
@@ -121,22 +127,15 @@ class AnnouncementsController extends BaseController
   public function update($id)
   {
     //
-    if($this->validator->isValidForUpdate(Input::all())){
-      DB::beginTransaction();
-      if($this->announcement->update($id, Input::all())){
-        DB::commit();
-        Session::flash('success', 'You have successfully updated this announcement');
-        return Redirect::route('announcements.show', $id);
-      }else{
-        DB::rollBack();
-        Session::flash('error', 'Failed to update this announcement. Please try again later');
-        return Redirect::route('announcements.show', $id);
-      }
-    }else{
-      return Redirect::route('announcements.edit', $id)
-                    ->withErrors($this->validator->errors())
-                    ->withInput();
+   if($this->announcementGateway->update($id, Input::all())){
+      Session::flash('success', 'You have successfully updated this announcement');
+      return Redirect::route('announcements.show', $id);
     }
+
+    return Redirect::route('announcements.edit',$id)
+                  ->with('error', 'Failed to update this announcement. This incident will be reported')
+                  ->withErrors($this->announcementGateway->errors())
+                  ->withInput();
   }
 
   /**

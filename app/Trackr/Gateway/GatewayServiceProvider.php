@@ -3,6 +3,7 @@
 use Illuminate\Support\ServiceProvider;
 use Trackr\Gateway\UserGateway;
 use Trackr\Gateway\JobGateway;
+use Trackr\Gateway\AnnouncementGateway;
 
 class GatewayServiceProvider extends ServiceProvider
 {
@@ -25,6 +26,13 @@ class GatewayServiceProvider extends ServiceProvider
         $app->make('Trackr\Repository\Jobs\InterfaceJobsRepository'),
         $app->make('Trackr\Repository\Departments\InterfaceDepartmentsRepository'),
         $app->make('Trackr\Services\Validation\JobsValidator')
+      );
+    });
+
+    $app->bind('Trackr\Gateway\AnnouncementGateway', function($app){
+      return new AnnouncementGateway(
+        $app->make('Trackr\Repository\Announcements\InterfaceAnnouncementsRepository'),
+        $app->make('Trackr\Services\Validation\AnnouncementsValidator')
       );
     });
   }
