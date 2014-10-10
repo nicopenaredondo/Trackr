@@ -22,8 +22,8 @@
 			"app/database/seeds",
 			"app/tests/TestCase.php"
 		],
-		"psr-0" : {
-			"Trackr" : "app/"
+		"psr-4" : {
+			"Trackr\\" : "app/Trackr"
 		}
 	},
 	"scripts": {
